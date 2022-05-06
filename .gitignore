@@ -1,10 +1,6 @@
 Cargo.lock
-Cargo.toml
-binding.gyp
-node_modules
-package-lock.json
 parser.exp
 parser.lib
 parser.obj
-src/
-bindings/
+package-lock.json
+node_modules/
