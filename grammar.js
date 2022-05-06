@@ -1,15 +1,34 @@
+const inst_convert = (insts) => Object.fromEntries(
+    Object.entries(insts).map(([opcode, operand]) => [
+        opcode,
+        $ => seq(optional($.inst_label), opcode, operand($)),
+    ]),
+);
+
+const instructions = inst_convert({
+    height: $ => $.number,
+    label: $ => $.data_label,
+    const: $ => $._literal,
+    heap: $ => $.number,
+    call: $ => $.function_name,
+    get: $ => $.number,
+    set: $ => $.number,
+    out: $ => $.port,
+    in: $ => $.port,
+});
+
 module.exports = grammar({
     name: "URSL",
     extras: $ => [/\s+/, $.comment, $.multiline_comment],
     word: $ => $.identifier,
 
     rules: {
-        source_file: $ => seq(optional($.defs), $.entrypoint, repeat($.func)),
+        source_file: $ => seq(repeat($.definition), repeat($.inline), $.entrypoint, repeat(choice($.func, $.inline))),
 
         comment: $ => seq("//", /.*[\r\n]/),
         multiline_comment: $ => seq("/*", /.*/, "*/"),
 
-        identifier: $ => /[A-Za-z0-9_]+/,
+        identifier: $ => /[A-Za-z0-9_]+/, // can't use \w because that's not a "terminal symbol" or something, but this is??
 
         function_name: $ => token(seq("$", /\w+/)),
 
@@ -25,34 +44,39 @@ module.exports = grammar({
                 /0x[A-Fa-f\d]+/,
             ),
         )),
-        
-        string: $ => seq('"', repeat($._char), '"'),
+
         char_literal: $ => seq(
             "'",
-            field("value", $._char),
+            field("value", choice($.char, $.char_escape)),
             "'",
         ),
-        _char: $ => choice($.char, $.char_escape),
         char: $ => /[^\\'\r\n]/,
         char_escape: $ => /\\['\\bfnrtv0]/,
 
         port: $ => seq("%", field("name", $.identifier)),
 
-        def_label: $ => seq(".", $.identifier),
+        inst_label: $ => seq(":", $.identifier),
+        data_label: $ => seq(".", $.identifier),
         definition: $ => seq(
-            field("label", $.def_label),
-            field("value", choice($._literal, $.string, $.array)),
+            field("label", $.data_label),
+            field("value", choice($._literal, $.array)),
         ),
-        
-        defs: $ => seq(
-            ".defs",
+
+        stack_behaviour: $ => seq(
+            ":",
+            field("params", $.number),
+            "->",
+            field("returns", $.number),
+        ),
+        instruction_list: $ => seq(
             "{",
-            repeat($.definition),
+            repeat($.instruction),
             "}",
         ),
+
         entrypoint: $ => seq(
-            ".entrypoint",
-            field("locals", $.number),
+            "entrypoint",
+            optional(field("locals", $.number)),
             "{",
             repeat($._instruction),
             "}",
@@ -60,38 +84,33 @@ module.exports = grammar({
         func: $ => seq(
             "func",
             field("name", $.function_name),
-            ":",
-            field("params", $.number),
-            "->",
-            field("returns", $.number),
-            "+",
-            field("locals", $.number),
+            $.stack_behaviour,
+            optional(seq(
+                "+",
+                field("locals", $.number)
+            )),
+            "{",
+            repeat($._instruction),
+            "}",
+        ),
+        inline: $ => seq(
+            "inline",
+            optional("always"),
+            field("name", $.function_name),
+            $.stack_behaviour,
             "{",
             repeat($._instruction),
             "}",
         ),
         _instruction: $ => choice(
-            $.label,
-            $.const,
-            $.heap,
-            $.call,
-            $.get,
-            $.set,
-            $.in,
-            $.out,
+            ...Object.keys(instructions).map(op => $[op]),
             $.instruction
         ),
-        
-        label: $ => seq("label", $.def_label),
-        const: $ => seq("const", $._literal),
-        heap: $ => seq("heap", $.number),
-        call: $ => seq("call", $.function_name),
-        get: $ => seq("get", $.number),
-        set: $ => seq("set", $.number),
-        in: $ => seq("in", $.port),
-        out: $ => seq("out", $.port),
+
+        ...instructions,
+
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
-        instruction: $ => $.identifier,
+        instruction: $ => seq(optional($.inst_label), $.identifier),
     },
 })

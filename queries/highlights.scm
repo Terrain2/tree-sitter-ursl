@@ -1,22 +1,38 @@
 (comment) @comment
 (multiline_comment) @comment
 (number) @number
+(port) @port
+(inst_label) @label
+(data_label) @label.data
 (function_name) @function
-(def_label) @label
+
+"'" @string
 (char) @string
 (char_escape) @string.special
-(port) @port
+
 (instruction
     (identifier) @instruction
 )
+
+(stack_behaviour
+    ":" @punctuation.delimiter
+)
 [
-    "'"
-    "\""
-] @string
+    "->"
+    "+"
+] @punctuation.delimiter
+
 [
-    ".defs"
-    ".entrypoint"
+    "[" "]" ; data arrays
+    "{" "}" ; instruction lists
+] @punctuation.bracket
+
+[
+    "entrypoint"
+    "inline"
+    "always"
     "func"
+    "height"
 ] @keyword
 [
     "label"
@@ -28,12 +44,3 @@
     "in"
     "out"
 ] @instruction
-[
-    ":"
-    "->"
-    "+"
-] @punctuation.delimiter
-[
-    "{"
-    "}"
-] @punctuation.bracket

@@ -1,12 +1,16 @@
-.defs {
-    .str "Hello, World!"
+.str [ 'H' 'e' 'l' 'l' 'o' ',' ' ' 'W' 'o' 'r' 'l' 'd' ]
+
+inline always $y : 8 -> 2 {
+    
 }
 
-.entrypoint 8 {
+entrypoint 8 {
 
 }
 
 func $x : 2 -> 5 + 8 {
+    :label
+    height 2 // this is invalid at the start of a function, only for syntax highlighting purposes
     label .str
     const 69
     call $x
