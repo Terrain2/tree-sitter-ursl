@@ -1,0 +1,22 @@
+{
+  "name": "tree-sitter-ursl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bindings/node",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Terrain",
+  "license": "MIT",
+  "tree-sitter": [
+    {
+        "scope": "source.ursl",
+        "file-types": [
+            "ursl"
+        ],
+        "highlights": [
+          "queries/highlights.scm"
+        ]
+    }
+]
+}

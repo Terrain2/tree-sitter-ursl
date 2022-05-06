@@ -1,0 +1,18 @@
+.defs {
+    .str "Hello, World!"
+}
+
+.entrypoint 8 {
+
+}
+
+func $x : 2 -> 5 + 8 {
+    label .str
+    const 69
+    call $x
+    heap 0
+    set 0
+    get 0
+    in %numb
+    out %numb
+}
