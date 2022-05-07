@@ -42,32 +42,37 @@
       ]
     },
     "comment": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "//"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "//"
+            },
+            {
+              "type": "PATTERN",
+              "value": ".*[\\r\\n]"
+            }
+          ]
         },
         {
-          "type": "PATTERN",
-          "value": ".*[\\r\\n]"
-        }
-      ]
-    },
-    "multiline_comment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "/*"
-        },
-        {
-          "type": "PATTERN",
-          "value": ".*"
-        },
-        {
-          "type": "STRING",
-          "value": "*/"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "/*"
+            },
+            {
+              "type": "PATTERN",
+              "value": ".*"
+            },
+            {
+              "type": "STRING",
+              "value": "*/"
+            }
+          ]
         }
       ]
     },
@@ -824,10 +829,6 @@
     {
       "type": "SYMBOL",
       "name": "comment"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "multiline_comment"
     }
   ],
   "conflicts": [],

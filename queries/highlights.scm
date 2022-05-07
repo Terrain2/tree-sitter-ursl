@@ -1,5 +1,4 @@
 (comment) @comment
-(multiline_comment) @comment
 (number) @number
 (port) @port
 (inst_label) @label

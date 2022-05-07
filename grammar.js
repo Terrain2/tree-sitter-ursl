@@ -21,14 +21,21 @@ const instructions = inst_convert({
 
 module.exports = grammar({
     name: "URSL",
-    extras: $ => [/\s+/, $.comment, $.multiline_comment],
+    extras: $ => [/\s+/, $.comment],
     word: $ => $.identifier,
 
     rules: {
-        source_file: $ => seq(repeat($.definition), repeat($.inline), $.entrypoint, repeat(choice($.func, $.inline))),
+        source_file: $ => seq(
+            repeat($.definition),
+            repeat($.inline),
+            $.entrypoint,
+            repeat(choice($.func, $.inline)),
+        ),
 
-        comment: $ => seq("//", /.*[\r\n]/),
-        multiline_comment: $ => seq("/*", /.*/, "*/"),
+        comment: $ => choice(
+            seq("//", /.*[\r\n]/),
+            seq("/*", /.*/, "*/"),
+        ),
 
         identifier: $ => /[A-Za-z0-9_]+/, // can't use \w because that's not a "terminal symbol" or something, but this is??
 

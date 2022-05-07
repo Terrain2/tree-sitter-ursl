@@ -522,11 +522,6 @@
     }
   },
   {
-    "type": "multiline_comment",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "out",
     "named": true,
     "fields": {},
