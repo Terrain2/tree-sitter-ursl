@@ -15,6 +15,8 @@ const instructions = inst_convert({
     set: $ => $.number,
     out: $ => $.port,
     in: $ => $.port,
+    jump: $ => $.inst_label,
+    branch: $ => $.inst_label,
 });
 
 module.exports = grammar({

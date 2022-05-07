@@ -19,6 +19,21 @@
     }
   },
   {
+    "type": "branch",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "inst_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "call",
     "named": true,
     "fields": {},
@@ -154,6 +169,10 @@
       "required": false,
       "types": [
         {
+          "type": "branch",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -179,6 +198,10 @@
         },
         {
           "type": "instruction",
+          "named": true
+        },
+        {
+          "type": "jump",
           "named": true
         },
         {
@@ -226,6 +249,10 @@
       "required": true,
       "types": [
         {
+          "type": "branch",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -251,6 +278,10 @@
         },
         {
           "type": "instruction",
+          "named": true
+        },
+        {
+          "type": "jump",
           "named": true
         },
         {
@@ -368,6 +399,10 @@
       "required": true,
       "types": [
         {
+          "type": "branch",
+          "named": true
+        },
+        {
           "type": "call",
           "named": true
         },
@@ -393,6 +428,10 @@
         },
         {
           "type": "instruction",
+          "named": true
+        },
+        {
+          "type": "jump",
           "named": true
         },
         {
@@ -441,6 +480,21 @@
           "type": "identifier",
           "named": true
         },
+        {
+          "type": "inst_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "jump",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
         {
           "type": "inst_label",
           "named": true
@@ -628,6 +682,10 @@
     "named": false
   },
   {
+    "type": "branch",
+    "named": false
+  },
+  {
     "type": "call",
     "named": false
   },
@@ -677,6 +735,10 @@
   },
   {
     "type": "inline",
+    "named": false
+  },
+  {
+    "type": "jump",
     "named": false
   },
   {

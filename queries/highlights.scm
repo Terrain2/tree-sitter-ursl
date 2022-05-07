@@ -43,4 +43,6 @@
     "set"
     "in"
     "out"
+    "jump"
+    "branch"
 ] @instruction

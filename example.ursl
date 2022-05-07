@@ -14,6 +14,8 @@ func $x : 2 -> 5 + 8 {
     label .str
     const 69
     call $x
+    jump :label
+    branch :label
     heap 0
     set 0
     get 0
