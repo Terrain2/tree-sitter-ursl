@@ -1,10 +1,10 @@
 [package]
-name = "tree-sitter-URSL"
+name = "tree-sitter-ursl"
 description = "URSL grammar for the tree-sitter parsing library"
 version = "0.0.1"
 keywords = ["incremental", "parsing", "URSL"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-URSL"
+repository = "https://github.com/Terrain2/tree-sitter-ursl"
 edition = "2018"
 license = "MIT"
 
