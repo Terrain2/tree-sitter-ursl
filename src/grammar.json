@@ -53,7 +53,7 @@
             },
             {
               "type": "PATTERN",
-              "value": ".*[\\r\\n]"
+              "value": "[^\\r\\n]*"
             }
           ]
         },
@@ -66,11 +66,11 @@
             },
             {
               "type": "PATTERN",
-              "value": ".*"
+              "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
             },
             {
               "type": "STRING",
-              "value": "*/"
+              "value": "/"
             }
           ]
         }
@@ -78,7 +78,7 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[A-Za-z0-9_]+"
+      "value": "([A-Za-z_]\\d*)+"
     },
     "function_name": {
       "type": "TOKEN",

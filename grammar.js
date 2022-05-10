@@ -33,11 +33,18 @@ module.exports = grammar({
         ),
 
         comment: $ => choice(
-            seq("//", /.*[\r\n]/),
-            seq("/*", /.*/, "*/"),
+            // these weren't working properly, so i copied the ones from C# grammar.
+            // i think they're written this weirdly because of LR parsing limitations
+            // (no backtracking ever, so the regex has to make sure it can't consume past the */, or else it'd never ever match and produces error nodes)
+            seq("//", /[^\r\n]*/),
+            seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"),
         ),
 
-        identifier: $ => /[A-Za-z0-9_]+/, // can't use \w because that's not a "terminal symbol" or something, but this is??
+        // when \d can be at the start, for some reason this overwrites numbers and inserts an error node with an identifier.
+        // probably something to do with keyword extraction, i.e. the ``word`` first above the rules
+        // but i genuinely have no fucking clue how to fix that without changing the semantics of everything else
+        // so labels and functions cannot start with a digit
+        identifier: $ => /([A-Za-z_]\d*)+/,
 
         function_name: $ => token(seq("$", /\w+/)),
 
