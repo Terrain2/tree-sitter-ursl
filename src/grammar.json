@@ -126,6 +126,10 @@
         {
           "type": "SYMBOL",
           "name": "char_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "macro"
         }
       ]
     },
@@ -187,6 +191,23 @@
     "char_escape": {
       "type": "PATTERN",
       "value": "\\\\['\\\\bfnrtv0]"
+    },
+    "macro": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
     },
     "port": {
       "type": "SEQ",

@@ -49,7 +49,7 @@ module.exports = grammar({
         function_name: $ => token(seq("$", /\w+/)),
 
         array: $ => seq("[", repeat($._literal), "]"),
-        _literal: $ => choice($.number, $.char_literal),
+        _literal: $ => choice($.number, $.char_literal, $.macro),
 
         number: $ => choice(
             /0b[0-1]+/,
@@ -65,6 +65,8 @@ module.exports = grammar({
         ),
         char: $ => /[^\\'\r\n]/,
         char_escape: $ => /\\['\\bfnrtv0]/,
+
+        macro: $ => seq("@", field("name", $.identifier)),
 
         port: $ => seq("%", field("name", $.identifier)),
 

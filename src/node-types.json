@@ -12,6 +12,10 @@
           "named": true
         },
         {
+          "type": "macro",
+          "named": true
+        },
+        {
           "type": "number",
           "named": true
         }
@@ -118,6 +122,10 @@
             "named": true
           },
           {
+            "type": "macro",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           }
@@ -165,6 +173,10 @@
           },
           {
             "type": "char_literal",
+            "named": true
+          },
+          {
+            "type": "macro",
             "named": true
           },
           {
@@ -602,6 +614,22 @@
     }
   },
   {
+    "type": "macro",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "number",
     "named": true,
     "fields": {}
@@ -761,6 +789,10 @@
   },
   {
     "type": ":",
+    "named": false
+  },
+  {
+    "type": "@",
     "named": false
   },
   {

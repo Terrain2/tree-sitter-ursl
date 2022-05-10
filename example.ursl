@@ -1,7 +1,7 @@
 .str [ 'H' 'e' 'l' 'l' 'o' ',' 0x20 'W' 'o' 'r' 'l' 'd' ]
 .escape '\n'
 .num 0x20
-.nums [ 1 2 3 4 ]
+.nums [ 1 2 3 4 /* ... */ @MAX ]
 
 inline $y : 8 -> 2 {
     
@@ -16,6 +16,8 @@ func $x : 2 -> 5 + 8 {
     height 2 // this is invalid at the start of a function, only for syntax highlighting purposes
     label .str
     const 69
+    const 'H'
+    const @MAX
     call $x
     jump :label
     branch :label

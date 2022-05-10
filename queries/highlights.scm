@@ -4,6 +4,7 @@
 (inst_label) @label
 (data_label) @label.data
 (function_name) @function
+(macro) @macro
 
 "'" @string
 (char) @string
@@ -29,7 +30,6 @@
 [
     "entrypoint"
     "inline"
-    "always"
     "func"
     "height"
 ] @keyword
