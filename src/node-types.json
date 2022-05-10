@@ -772,10 +772,6 @@
     "named": false
   },
   {
-    "type": "always",
-    "named": false
-  },
-  {
     "type": "branch",
     "named": false
   },

@@ -1,9 +1,9 @@
+.str [ 'H' 'e' 'l' 'l' 'o' ',' 0x20 'W' 'o' 'r' 'l' 'd' ]
 .escape '\n'
 .num 0x20
 .nums [ 1 2 3 4 ]
 
-/*
-inline always $y : 8 -> 2 {
+inline $y : 8 -> 2 {
     
 }
 
@@ -25,4 +25,3 @@ func $x : 2 -> 5 + 8 {
     in %numb
     out %numb
 }
-*/

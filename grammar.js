@@ -108,7 +108,6 @@ module.exports = grammar({
         ),
         inline: $ => seq(
             "inline",
-            optional("always"),
             field("name", $.function_name),
             $.stack_behaviour,
             "{",
