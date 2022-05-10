@@ -1,7 +1,7 @@
 const inst_convert = (insts) => Object.fromEntries(
     Object.entries(insts).map(([opcode, operand]) => [
         opcode,
-        $ => seq(optional($.inst_label), opcode, operand($)),
+        $ => seq(field("label", optional($.inst_label)), opcode, field("operand", operand($))),
     ]),
 );
 
@@ -64,8 +64,8 @@ module.exports = grammar({
 
         port: $ => seq("%", field("name", $.identifier)),
 
-        inst_label: $ => seq(":", $.identifier),
-        data_label: $ => seq(".", $.identifier),
+        inst_label: $ => seq(":", field("name", $.identifier)),
+        data_label: $ => seq(".", field("name", $.identifier)),
         definition: $ => seq(
             field("label", $.data_label),
             field("value", choice($._literal, $.array)),
@@ -120,6 +120,6 @@ module.exports = grammar({
 
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
-        instruction: $ => seq(optional($.inst_label), $.identifier),
+        instruction: $ => seq(field("label", optional($.inst_label)), field("opcode", $.identifier)),
     },
 })
