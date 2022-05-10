@@ -64,7 +64,7 @@ module.exports = grammar({
             "'",
         ),
         char: $ => /[^\\'\r\n]/,
-        char_escape: $ => /\\['\\bfnrtv0]/,
+        char_escape: $ => /\\['\\nrt0]/,
 
         macro: $ => seq("@", field("name", $.identifier)),
 

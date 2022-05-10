@@ -603,20 +603,6 @@ static const uint16_t ts_non_terminal_alias_map[] = {
   0,
 };
 
-static inline bool sym_char_escape_character_set_1(int32_t c) {
-  return (c < 'f'
-    ? (c < '\\'
-      ? (c < '0'
-        ? c == '\''
-        : c <= '0')
-      : (c <= '\\' || c == 'b'))
-    : (c <= 'f' || (c < 't'
-      ? (c < 'r'
-        ? c == 'n'
-        : c <= 'r')
-      : (c <= 't' || c == 'v'))));
-}
-
 static bool ts_lex(TSLexer *lexer, TSStateId state) {
   START_LEXER();
   eof = lexer->eof(lexer);
@@ -634,7 +620,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       if (lookahead == ':') ADVANCE(39);
       if (lookahead == '@') ADVANCE(37);
       if (lookahead == '[') ADVANCE(25);
-      if (lookahead == '\\') ADVANCE(8);
+      if (lookahead == '\\') ADVANCE(7);
       if (lookahead == ']') ADVANCE(26);
       if (lookahead == '{') ADVANCE(42);
       if (lookahead == '}') ADVANCE(43);
@@ -667,7 +653,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 4:
       if (lookahead == '/') ADVANCE(34);
-      if (lookahead == '\\') ADVANCE(8);
+      if (lookahead == '\\') ADVANCE(7);
       if (lookahead == '\t' ||
           lookahead == ' ') ADVANCE(35);
       if (lookahead == '\n' ||
@@ -683,10 +669,15 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
           lookahead == '1') ADVANCE(27);
       END_STATE();
     case 7:
-      if (('0' <= lookahead && lookahead <= '7')) ADVANCE(28);
+      if (lookahead == '\'' ||
+          lookahead == '0' ||
+          lookahead == '\\' ||
+          lookahead == 'n' ||
+          lookahead == 'r' ||
+          lookahead == 't') ADVANCE(36);
       END_STATE();
     case 8:
-      if (sym_char_escape_character_set_1(lookahead)) ADVANCE(36);
+      if (('0' <= lookahead && lookahead <= '7')) ADVANCE(28);
       END_STATE();
     case 9:
       if (('0' <= lookahead && lookahead <= '9') ||
@@ -797,7 +788,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 29:
       ACCEPT_TOKEN(aux_sym_number_token3);
       if (lookahead == 'b') ADVANCE(6);
-      if (lookahead == 'o') ADVANCE(7);
+      if (lookahead == 'o') ADVANCE(8);
       if (lookahead == 'x') ADVANCE(9);
       if (('0' <= lookahead && lookahead <= '9')) ADVANCE(30);
       END_STATE();

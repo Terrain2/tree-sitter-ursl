@@ -190,7 +190,7 @@
     },
     "char_escape": {
       "type": "PATTERN",
-      "value": "\\\\['\\\\bfnrtv0]"
+      "value": "\\\\['\\\\nrt0]"
     },
     "macro": {
       "type": "SEQ",
