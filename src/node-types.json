@@ -602,6 +602,11 @@
     }
   },
   {
+    "type": "number",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "out",
     "named": true,
     "fields": {
@@ -833,10 +838,6 @@
   {
     "type": "label",
     "named": false
-  },
-  {
-    "type": "number",
-    "named": true
   },
   {
     "type": "out",

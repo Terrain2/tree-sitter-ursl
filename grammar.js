@@ -44,15 +44,12 @@ module.exports = grammar({
         array: $ => seq("[", repeat($._literal), "]"),
         _literal: $ => choice($.number, $.char_literal),
 
-        number: $ => token(seq(
-            /[+-]?/,
-            choice(
-                /0b[0-1]+/,
-                /0o[0-7]+/,
-                /\d+/,
-                /0x[A-Fa-f\d]+/,
-            ),
-        )),
+        number: $ => choice(
+            /0b[0-1]+/,
+            /0o[0-7]+/,
+            /\d+/,
+            /0x[A-Fa-f\d]+/,
+        ),
 
         char_literal: $ => seq(
             "'",
