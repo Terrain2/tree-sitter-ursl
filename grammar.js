@@ -27,7 +27,6 @@ module.exports = grammar({
     rules: {
         source_file: $ => seq(
             repeat($.definition),
-            repeat($.inline),
             $.entrypoint,
             repeat(choice($.func, $.inline)),
         ),

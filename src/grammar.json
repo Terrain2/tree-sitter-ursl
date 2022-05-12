@@ -13,13 +13,6 @@
           }
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "inline"
-          }
-        },
-        {
           "type": "SYMBOL",
           "name": "entrypoint"
         },
