@@ -532,7 +532,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
 };
 
 enum {
-  field_instruction = 1,
+  field_instructions = 1,
   field_label = 2,
   field_locals = 3,
   field_name = 4,
@@ -546,7 +546,7 @@ enum {
 
 static const char * const ts_field_names[] = {
   [0] = NULL,
-  [field_instruction] = "instruction",
+  [field_instructions] = "instructions",
   [field_label] = "label",
   [field_locals] = "locals",
   [field_name] = "name",
@@ -587,24 +587,24 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
     {field_label, 0},
     {field_opcode, 1},
   [7] =
-    {field_instruction, 2},
+    {field_instructions, 2},
   [8] =
     {field_value, 1},
   [9] =
     {field_label, 0},
     {field_operand, 2},
   [11] =
-    {field_instruction, 3},
+    {field_instructions, 3},
     {field_locals, 1},
   [13] =
     {field_params, 1},
     {field_returns, 3},
   [15] =
-    {field_instruction, 4},
+    {field_instructions, 4},
     {field_name, 1},
     {field_stack, 2},
   [18] =
-    {field_instruction, 6},
+    {field_instructions, 6},
     {field_locals, 4},
     {field_name, 1},
     {field_stack, 2},

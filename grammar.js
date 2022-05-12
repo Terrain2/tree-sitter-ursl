@@ -83,7 +83,7 @@ module.exports = grammar({
             field("returns", $.number),
         ),
         instruction_list: $ => seq(
-            repeat($._instruction),
+            repeat1($._instruction),
         ),
 
         entrypoint: $ => seq(
