@@ -323,7 +323,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "instruction"
+            "name": "_instruction"
           }
         },
         {
@@ -356,19 +356,12 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "instructions",
           "content": {
             "type": "SYMBOL",
-            "name": "_instruction"
+            "name": "instruction_list"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
         }
       ]
     },
@@ -421,19 +414,12 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "instructions",
           "content": {
             "type": "SYMBOL",
-            "name": "_instruction"
+            "name": "instruction_list"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
         }
       ]
     },
@@ -461,19 +447,12 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "instructions",
           "content": {
             "type": "SYMBOL",
-            "name": "_instruction"
+            "name": "instruction_list"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
         }
       ]
     },

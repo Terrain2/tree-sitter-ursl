@@ -191,6 +191,16 @@
     "type": "entrypoint",
     "named": true,
     "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "instruction_list",
+            "named": true
+          }
+        ]
+      },
       "locals": {
         "multiple": false,
         "required": false,
@@ -201,66 +211,22 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "branch",
-          "named": true
-        },
-        {
-          "type": "call",
-          "named": true
-        },
-        {
-          "type": "const",
-          "named": true
-        },
-        {
-          "type": "get",
-          "named": true
-        },
-        {
-          "type": "heap",
-          "named": true
-        },
-        {
-          "type": "height",
-          "named": true
-        },
-        {
-          "type": "in",
-          "named": true
-        },
-        {
-          "type": "instruction",
-          "named": true
-        },
-        {
-          "type": "jump",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "out",
-          "named": true
-        },
-        {
-          "type": "set",
-          "named": true
-        }
-      ]
     }
   },
   {
     "type": "func",
     "named": true,
     "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "instruction_list",
+            "named": true
+          }
+        ]
+      },
       "locals": {
         "multiple": false,
         "required": false,
@@ -291,60 +257,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "branch",
-          "named": true
-        },
-        {
-          "type": "call",
-          "named": true
-        },
-        {
-          "type": "const",
-          "named": true
-        },
-        {
-          "type": "get",
-          "named": true
-        },
-        {
-          "type": "heap",
-          "named": true
-        },
-        {
-          "type": "height",
-          "named": true
-        },
-        {
-          "type": "in",
-          "named": true
-        },
-        {
-          "type": "instruction",
-          "named": true
-        },
-        {
-          "type": "jump",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "out",
-          "named": true
-        },
-        {
-          "type": "set",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -455,6 +367,16 @@
     "type": "inline",
     "named": true,
     "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "instruction_list",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -475,7 +397,54 @@
           }
         ]
       }
-    },
+    }
+  },
+  {
+    "type": "inst_label",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "instruction",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "opcode": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "instruction_list",
+    "named": true,
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -529,48 +498,6 @@
           "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "inst_label",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "instruction",
-    "named": true,
-    "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "opcode": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
