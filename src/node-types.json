@@ -191,7 +191,7 @@
     "type": "entrypoint",
     "named": true,
     "fields": {
-      "instructions": {
+      "instruction_list": {
         "multiple": false,
         "required": true,
         "types": [
@@ -217,7 +217,7 @@
     "type": "func",
     "named": true,
     "fields": {
-      "instructions": {
+      "instruction_list": {
         "multiple": false,
         "required": true,
         "types": [
@@ -367,7 +367,7 @@
     "type": "inline",
     "named": true,
     "fields": {
-      "instructions": {
+      "instruction_list": {
         "multiple": false,
         "required": true,
         "types": [
@@ -444,60 +444,61 @@
   {
     "type": "instruction_list",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "branch",
-          "named": true
-        },
-        {
-          "type": "call",
-          "named": true
-        },
-        {
-          "type": "const",
-          "named": true
-        },
-        {
-          "type": "get",
-          "named": true
-        },
-        {
-          "type": "heap",
-          "named": true
-        },
-        {
-          "type": "height",
-          "named": true
-        },
-        {
-          "type": "in",
-          "named": true
-        },
-        {
-          "type": "instruction",
-          "named": true
-        },
-        {
-          "type": "jump",
-          "named": true
-        },
-        {
-          "type": "label",
-          "named": true
-        },
-        {
-          "type": "out",
-          "named": true
-        },
-        {
-          "type": "set",
-          "named": true
-        }
-      ]
+    "fields": {
+      "instructions": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "branch",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "const",
+            "named": true
+          },
+          {
+            "type": "get",
+            "named": true
+          },
+          {
+            "type": "heap",
+            "named": true
+          },
+          {
+            "type": "height",
+            "named": true
+          },
+          {
+            "type": "in",
+            "named": true
+          },
+          {
+            "type": "instruction",
+            "named": true
+          },
+          {
+            "type": "jump",
+            "named": true
+          },
+          {
+            "type": "label",
+            "named": true
+          },
+          {
+            "type": "out",
+            "named": true
+          },
+          {
+            "type": "set",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {

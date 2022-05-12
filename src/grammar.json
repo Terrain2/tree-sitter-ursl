@@ -320,10 +320,14 @@
           "value": "{"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "instructions",
           "content": {
-            "type": "SYMBOL",
-            "name": "_instruction"
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_instruction"
+            }
           }
         },
         {
@@ -357,7 +361,7 @@
         },
         {
           "type": "FIELD",
-          "name": "instructions",
+          "name": "instruction_list",
           "content": {
             "type": "SYMBOL",
             "name": "instruction_list"
@@ -415,7 +419,7 @@
         },
         {
           "type": "FIELD",
-          "name": "instructions",
+          "name": "instruction_list",
           "content": {
             "type": "SYMBOL",
             "name": "instruction_list"
@@ -448,7 +452,7 @@
         },
         {
           "type": "FIELD",
-          "name": "instructions",
+          "name": "instruction_list",
           "content": {
             "type": "SYMBOL",
             "name": "instruction_list"
