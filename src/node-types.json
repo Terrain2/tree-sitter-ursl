@@ -280,11 +280,21 @@
             "named": true
           }
         ]
+      },
+      "stack": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "stack_behaviour",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "branch",
@@ -332,10 +342,6 @@
         },
         {
           "type": "set",
-          "named": true
-        },
-        {
-          "type": "stack_behaviour",
           "named": true
         }
       ]
@@ -458,11 +464,21 @@
             "named": true
           }
         ]
+      },
+      "stack": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "stack_behaviour",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "branch",
@@ -510,10 +526,6 @@
         },
         {
           "type": "set",
-          "named": true
-        },
-        {
-          "type": "stack_behaviour",
           "named": true
         }
       ]

@@ -388,8 +388,12 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "stack_behaviour"
+          "type": "FIELD",
+          "name": "stack",
+          "content": {
+            "type": "SYMBOL",
+            "name": "stack_behaviour"
+          }
         },
         {
           "type": "CHOICE",
@@ -449,8 +453,12 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "stack_behaviour"
+          "type": "FIELD",
+          "name": "stack",
+          "content": {
+            "type": "SYMBOL",
+            "name": "stack_behaviour"
+          }
         },
         {
           "type": "STRING",

@@ -98,7 +98,7 @@ module.exports = grammar({
         func: $ => seq(
             "func",
             field("name", $.function_name),
-            $.stack_behaviour,
+            field("stack", $.stack_behaviour),
             optional(seq(
                 "+",
                 field("locals", $.number)
@@ -110,7 +110,7 @@ module.exports = grammar({
         inline: $ => seq(
             "inline",
             field("name", $.function_name),
-            $.stack_behaviour,
+            field("stack", $.stack_behaviour),
             "{",
             repeat($._instruction),
             "}",
