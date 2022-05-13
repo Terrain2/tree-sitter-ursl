@@ -82,7 +82,9 @@ module.exports = grammar({
             field("returns", $.number),
         ),
         instruction_list: $ => seq(
-            repeat1($._instruction),
+            "{",
+            repeat($._instruction),
+            "}",
         ),
         func: $ => seq(
             "func",
@@ -92,17 +94,13 @@ module.exports = grammar({
                 "+",
                 field("locals", $.number)
             )),
-            "{",
-            field("instructions", optional($.instruction_list)),
-            "}",
+            field("instructions", $.instruction_list),
         ),
         inline: $ => seq(
             "inline",
             field("name", $.function_name),
             field("stack", $.stack_behaviour),
-            "{",
-            field("instructions", optional($.instruction_list)),
-            "}",
+            field("instructions", $.instruction_list),
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),

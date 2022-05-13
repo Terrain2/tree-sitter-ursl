@@ -3,27 +3,38 @@
 .num 0x20
 .nums [ 1 2 3 4 /* ... */ @MAX ]
 
-func $main + 8 {
-    pop
+func $main {
+    const 0
+    call $fib
+    out %NUMB
 }
 
-inline $y : 8 -> 2 {
-    pop
-}
-
-func $x : 2 -> 5 + 8 {
-    :label
-    height 2 // this is invalid at the start of a function, only for syntax highlighting purposes
-    label .str
-    const 69
-    const 'H'
-    const @MAX
-    call $x
-    jump :label
-    branch :label
-    heap 0
-    set 0
+func $fib : 1 -> 1 {
     get 0
-    in %numb
-    out %numb
+    const 0
+    equal
+    branch :base_case
+
+    get 0
+    const 1
+    equal
+    branch :base_case
+
+    get 0
+    const 1
+    sub
+    call $fib
+
+    get 0
+    const 2
+    sub
+    call $fib
+
+    add
+    ret
+
+    height 0
+    :base_case
+    get 0
+    ret
 }

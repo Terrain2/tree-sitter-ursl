@@ -193,7 +193,7 @@
     "fields": {
       "instructions": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "instruction_list",
@@ -343,7 +343,7 @@
     "fields": {
       "instructions": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "instruction_list",
@@ -421,7 +421,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "branch",
