@@ -134,6 +134,52 @@
     }
   },
   {
+    "type": "custom_instruction",
+    "named": true,
+    "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "instruction_list",
+            "named": true
+          }
+        ]
+      },
+      "locals": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "stack": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "stack_behaviour",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "data_label",
     "named": true,
     "fields": {
@@ -331,42 +377,6 @@
         "types": [
           {
             "type": "port",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "inline",
-    "named": true,
-    "fields": {
-      "instructions": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "function_name",
-            "named": true
-          }
-        ]
-      },
-      "stack": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "stack_behaviour",
             "named": true
           }
         ]
@@ -624,15 +634,15 @@
       "required": false,
       "types": [
         {
+          "type": "custom_instruction",
+          "named": true
+        },
+        {
           "type": "definition",
           "named": true
         },
         {
           "type": "func",
-          "named": true
-        },
-        {
-          "type": "inline",
           "named": true
         }
       ]
@@ -761,7 +771,7 @@
     "named": false
   },
   {
-    "type": "inline",
+    "type": "inst",
     "named": false
   },
   {

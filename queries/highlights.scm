@@ -17,6 +17,10 @@
 (stack_behaviour
     ":" @punctuation.delimiter
 )
+
+(custom_instruction
+    name: (identifier) @instruction
+)
 [
     "->"
     "+"
@@ -27,7 +31,7 @@
 ] @punctuation.bracket
 
 [
-    "inline"
+    "inst"
     "func"
     "height"
 ] @keyword
