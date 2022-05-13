@@ -188,38 +188,12 @@
     }
   },
   {
-    "type": "entrypoint",
-    "named": true,
-    "fields": {
-      "instructions": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "locals": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "number",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "func",
     "named": true,
     "fields": {
       "instructions": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "instruction_list",
@@ -249,7 +223,7 @@
       },
       "stack": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "stack_behaviour",
@@ -369,7 +343,7 @@
     "fields": {
       "instructions": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "instruction_list",
@@ -647,14 +621,10 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "definition",
-          "named": true
-        },
-        {
-          "type": "entrypoint",
           "named": true
         },
         {
@@ -760,10 +730,6 @@
   },
   {
     "type": "const",
-    "named": false
-  },
-  {
-    "type": "entrypoint",
     "named": false
   },
   {

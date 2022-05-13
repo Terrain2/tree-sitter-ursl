@@ -13,10 +13,6 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "entrypoint"
-        },
-        {
           "type": "REPEAT",
           "content": {
             "type": "CHOICE",
@@ -324,47 +320,6 @@
         }
       ]
     },
-    "entrypoint": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "entrypoint"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "locals",
-              "content": {
-                "type": "SYMBOL",
-                "name": "number"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "FIELD",
-          "name": "instructions",
-          "content": {
-            "type": "SYMBOL",
-            "name": "instruction_list"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
     "func": {
       "type": "SEQ",
       "members": [
@@ -381,12 +336,20 @@
           }
         },
         {
-          "type": "FIELD",
-          "name": "stack",
-          "content": {
-            "type": "SYMBOL",
-            "name": "stack_behaviour"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "stack",
+              "content": {
+                "type": "SYMBOL",
+                "name": "stack_behaviour"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",
@@ -421,8 +384,16 @@
           "type": "FIELD",
           "name": "instructions",
           "content": {
-            "type": "SYMBOL",
-            "name": "instruction_list"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "instruction_list"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -462,8 +433,16 @@
           "type": "FIELD",
           "name": "instructions",
           "content": {
-            "type": "SYMBOL",
-            "name": "instruction_list"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "instruction_list"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {

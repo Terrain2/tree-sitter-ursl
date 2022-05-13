@@ -21,14 +21,12 @@
     "->"
     "+"
 ] @punctuation.delimiter
-
 [
     "[" "]" ; data arrays
     "{" "}" ; instruction lists
 ] @punctuation.bracket
 
 [
-    "entrypoint"
     "inline"
     "func"
     "height"

@@ -27,7 +27,6 @@ module.exports = grammar({
     rules: {
         source_file: $ => seq(
             repeat($.definition),
-            $.entrypoint,
             repeat(choice($.func, $.inline)),
         ),
 
@@ -85,24 +84,16 @@ module.exports = grammar({
         instruction_list: $ => seq(
             repeat1($._instruction),
         ),
-
-        entrypoint: $ => seq(
-            "entrypoint",
-            optional(field("locals", $.number)),
-            "{",
-            field("instructions", $.instruction_list),
-            "}",
-        ),
         func: $ => seq(
             "func",
             field("name", $.function_name),
-            field("stack", $.stack_behaviour),
+            optional(field("stack", $.stack_behaviour)),
             optional(seq(
                 "+",
                 field("locals", $.number)
             )),
             "{",
-            field("instructions", $.instruction_list),
+            field("instructions", optional($.instruction_list)),
             "}",
         ),
         inline: $ => seq(
@@ -110,7 +101,7 @@ module.exports = grammar({
             field("name", $.function_name),
             field("stack", $.stack_behaviour),
             "{",
-            field("instructions", $.instruction_list),
+            field("instructions", optional($.instruction_list)),
             "}",
         ),
         _instruction: $ => choice(
