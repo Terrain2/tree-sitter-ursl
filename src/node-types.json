@@ -169,7 +169,7 @@
       },
       "stack": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "stack_behaviour",

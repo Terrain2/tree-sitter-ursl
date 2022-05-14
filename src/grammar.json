@@ -410,12 +410,20 @@
           }
         },
         {
-          "type": "FIELD",
-          "name": "stack",
-          "content": {
-            "type": "SYMBOL",
-            "name": "stack_behaviour"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "stack",
+              "content": {
+                "type": "SYMBOL",
+                "name": "stack_behaviour"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "CHOICE",

@@ -99,7 +99,7 @@ module.exports = grammar({
         custom_instruction: $ => seq(
             "inst",
             field("name", $.identifier),
-            field("stack", $.stack_behaviour),
+            optional(field("stack", $.stack_behaviour)),
             optional(seq(
                 "+",
                 field("locals", $.number)
