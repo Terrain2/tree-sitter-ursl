@@ -40,5 +40,19 @@ func $fib : 1 -> 1 {
 }
 
 inst x : 1 -> 1 {
-    
+
+}
+
+urcl example : 1 -> 1 {
+    :a IMM $0 #0
+    :a JMP :a
+
+    :a BR :a $0 $0
+    :a BR :a $0
+
+    :a ADD $0 $0 $0
+    :a INC $0 $0
+
+    IN $0 %NUMB
+    OUT %NUMB $1
 }

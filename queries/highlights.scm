@@ -5,22 +5,23 @@
 (data_label) @label.data
 (function_name) @function
 (macro) @macro
+(mem) @address
+(register) @register
 
 "'" @string
 (char) @string
 (char_escape) @string.special
 
-(instruction
-    (identifier) @instruction
-)
-
 (stack_behaviour
     ":" @punctuation.delimiter
 )
 
-(custom_instruction
-    name: (identifier) @instruction
-)
+(inst name: (identifier) @instruction)
+(urcl name: (identifier) @instruction)
+
+(instruction (identifier) @instruction)
+(urcl_instruction op: (identifier) @instruction)
+
 [
     "->"
     "+"
@@ -33,12 +34,11 @@
 [
     "inst"
     "func"
+    "urcl"
     "height"
 ] @keyword
 [
-    "label"
     "const"
-    "heap"
     "call"
     "get"
     "set"
@@ -46,4 +46,7 @@
     "out"
     "jump"
     "branch"
+    "JMP"
+    "IN"
+    "OUT"
 ] @instruction

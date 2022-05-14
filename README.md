@@ -12,11 +12,11 @@ For syntax highlighting, also do this:
 -   Add the necessary colors from `queries/highlights.scm` to the config
 -   Alternatively, copy my config which is meant to resemble vscode's Dark+ theme
 
-```json
+```jsonc
 {
     "parser-directories": [
         // Don't forget to add the **parent directory** of this repo
-        // On my machine, this repo sits in "tree-sitter-urcl" which is in the following directory:
+        // On my machine, this repo sits in "tree-sitter-ursl" which is in the following directory:
         "C:\\Users\\Terrain\\Documents\\Code\\tree-sitter"
     ],
     "theme": {
@@ -41,7 +41,7 @@ For syntax highlighting, also do this:
         "identifier.placeholder": {
             "color": "#9CDCFE",
             "italic": true
-        }
+        },
         // probably shouldn't delete the default entries after this point
     }
 }

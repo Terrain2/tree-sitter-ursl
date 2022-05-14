@@ -15,17 +15,8 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "func"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "custom_instruction"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_func"
           }
         }
       ]
@@ -96,7 +87,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_literal"
+            "name": "_const_literal"
           }
         },
         {
@@ -105,7 +96,7 @@
         }
       ]
     },
-    "_literal": {
+    "_const_literal": {
       "type": "CHOICE",
       "members": [
         {
@@ -119,6 +110,23 @@
         {
           "type": "SYMBOL",
           "name": "macro"
+        }
+      ]
+    },
+    "_literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_const_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "mem"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "data_label"
         }
       ]
     },
@@ -198,6 +206,23 @@
         }
       ]
     },
+    "mem": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#"
+        },
+        {
+          "type": "FIELD",
+          "name": "address",
+          "content": {
+            "type": "PATTERN",
+            "value": "([1-9]0*)+|0"
+          }
+        }
+      ]
+    },
     "port": {
       "type": "SEQ",
       "members": [
@@ -268,7 +293,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_literal"
+                "name": "_const_literal"
               },
               {
                 "type": "SYMBOL",
@@ -325,6 +350,23 @@
         {
           "type": "STRING",
           "value": "}"
+        }
+      ]
+    },
+    "_func": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "func"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "inst"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "urcl"
         }
       ]
     },
@@ -394,7 +436,7 @@
         }
       ]
     },
-    "custom_instruction": {
+    "inst": {
       "type": "SEQ",
       "members": [
         {
@@ -460,6 +502,47 @@
         }
       ]
     },
+    "urcl": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "urcl"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "stack",
+              "content": {
+                "type": "SYMBOL",
+                "name": "stack_behaviour"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "instructions",
+          "content": {
+            "type": "SYMBOL",
+            "name": "urcl_instruction_list"
+          }
+        }
+      ]
+    },
     "_instruction": {
       "type": "CHOICE",
       "members": [
@@ -469,15 +552,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "label"
-        },
-        {
-          "type": "SYMBOL",
           "name": "const"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "heap"
         },
         {
           "type": "SYMBOL",
@@ -546,39 +621,6 @@
         }
       ]
     },
-    "label": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "label",
-              "content": {
-                "type": "SYMBOL",
-                "name": "inst_label"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "label"
-        },
-        {
-          "type": "FIELD",
-          "name": "operand",
-          "content": {
-            "type": "SYMBOL",
-            "name": "data_label"
-          }
-        }
-      ]
-    },
     "const": {
       "type": "SEQ",
       "members": [
@@ -608,39 +650,6 @@
           "content": {
             "type": "SYMBOL",
             "name": "_literal"
-          }
-        }
-      ]
-    },
-    "heap": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "label",
-              "content": {
-                "type": "SYMBOL",
-                "name": "inst_label"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "heap"
-        },
-        {
-          "type": "FIELD",
-          "name": "operand",
-          "content": {
-            "type": "SYMBOL",
-            "name": "number"
           }
         }
       ]
@@ -902,6 +911,288 @@
             "type": "SYMBOL",
             "name": "identifier"
           }
+        }
+      ]
+    },
+    "urcl_instruction_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_urcl_instruction"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_urcl_instruction": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "jmp"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "urcl_in"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "urcl_out"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "urcl_instruction"
+        }
+      ]
+    },
+    "register": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "$"
+        },
+        {
+          "type": "FIELD",
+          "name": "idx",
+          "content": {
+            "type": "PATTERN",
+            "value": "([1-9]0*)+|0"
+          }
+        }
+      ]
+    },
+    "_value": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "register"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_literal"
+        }
+      ]
+    },
+    "unary_source": {
+      "type": "SYMBOL",
+      "name": "register"
+    },
+    "binary_source": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "src1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "src2",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
+        }
+      ]
+    },
+    "jmp": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "inst_label"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "JMP"
+        },
+        {
+          "type": "FIELD",
+          "name": "dest",
+          "content": {
+            "type": "SYMBOL",
+            "name": "inst_label"
+          }
+        }
+      ]
+    },
+    "urcl_in": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "inst_label"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "IN"
+        },
+        {
+          "type": "FIELD",
+          "name": "dest",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "source",
+          "content": {
+            "type": "SYMBOL",
+            "name": "port"
+          }
+        }
+      ]
+    },
+    "urcl_out": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "inst_label"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "OUT"
+        },
+        {
+          "type": "FIELD",
+          "name": "dest",
+          "content": {
+            "type": "SYMBOL",
+            "name": "port"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "source",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_value"
+          }
+        }
+      ]
+    },
+    "urcl_instruction": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "inst_label"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "op",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "dest",
+          "content": {
+            "type": "SYMBOL",
+            "name": "register"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "source",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_value"
+              }
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "source1",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_value"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "source2",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_value"
+                  }
+                }
+              ]
+            }
+          ]
         }
       ]
     }

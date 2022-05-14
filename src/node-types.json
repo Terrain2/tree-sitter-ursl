@@ -122,57 +122,19 @@
             "named": true
           },
           {
+            "type": "data_label",
+            "named": true
+          },
+          {
             "type": "macro",
             "named": true
           },
           {
-            "type": "number",
+            "type": "mem",
             "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "custom_instruction",
-    "named": true,
-    "fields": {
-      "instructions": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "locals": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
             "type": "number",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "stack": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "stack_behaviour",
             "named": true
           }
         ]
@@ -306,32 +268,6 @@
     }
   },
   {
-    "type": "heap",
-    "named": true,
-    "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "operand": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "number",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "height",
     "named": true,
     "fields": {
@@ -377,6 +313,52 @@
         "types": [
           {
             "type": "port",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "inst",
+    "named": true,
+    "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "instruction_list",
+            "named": true
+          }
+        ]
+      },
+      "locals": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "stack": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "stack_behaviour",
             "named": true
           }
         ]
@@ -450,10 +432,6 @@
           "named": true
         },
         {
-          "type": "heap",
-          "named": true
-        },
-        {
           "type": "height",
           "named": true
         },
@@ -470,10 +448,6 @@
           "named": true
         },
         {
-          "type": "label",
-          "named": true
-        },
-        {
           "type": "out",
           "named": true
         },
@@ -482,6 +456,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "jmp",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -511,32 +511,6 @@
     }
   },
   {
-    "type": "label",
-    "named": true,
-    "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "operand": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "data_label",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "macro",
     "named": true,
     "fields": {
@@ -551,6 +525,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "mem",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "number",
@@ -600,6 +579,11 @@
     }
   },
   {
+    "type": "register",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "set",
     "named": true,
     "fields": {
@@ -634,15 +618,19 @@
       "required": false,
       "types": [
         {
-          "type": "custom_instruction",
-          "named": true
-        },
-        {
           "type": "definition",
           "named": true
         },
         {
           "type": "func",
+          "named": true
+        },
+        {
+          "type": "inst",
+          "named": true
+        },
+        {
+          "type": "urcl",
           "named": true
         }
       ]
@@ -673,6 +661,295 @@
         ]
       }
     }
+  },
+  {
+    "type": "urcl",
+    "named": true,
+    "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "urcl_instruction_list",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "stack": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "stack_behaviour",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "urcl_in",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "source": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "port",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "urcl_instruction",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "op": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "source": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "char_literal",
+            "named": true
+          },
+          {
+            "type": "data_label",
+            "named": true
+          },
+          {
+            "type": "macro",
+            "named": true
+          },
+          {
+            "type": "mem",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "source1": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "char_literal",
+            "named": true
+          },
+          {
+            "type": "data_label",
+            "named": true
+          },
+          {
+            "type": "macro",
+            "named": true
+          },
+          {
+            "type": "mem",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "source2": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "char_literal",
+            "named": true
+          },
+          {
+            "type": "data_label",
+            "named": true
+          },
+          {
+            "type": "macro",
+            "named": true
+          },
+          {
+            "type": "mem",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "urcl_instruction_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "jmp",
+          "named": true
+        },
+        {
+          "type": "urcl_in",
+          "named": true
+        },
+        {
+          "type": "urcl_instruction",
+          "named": true
+        },
+        {
+          "type": "urcl_out",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "urcl_out",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "port",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "source": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "char_literal",
+            "named": true
+          },
+          {
+            "type": "data_label",
+            "named": true
+          },
+          {
+            "type": "macro",
+            "named": true
+          },
+          {
+            "type": "mem",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "#",
+    "named": false
+  },
+  {
+    "type": "$",
+    "named": false
   },
   {
     "type": "%",
@@ -712,6 +989,18 @@
   },
   {
     "type": "@",
+    "named": false
+  },
+  {
+    "type": "IN",
+    "named": false
+  },
+  {
+    "type": "JMP",
+    "named": false
+  },
+  {
+    "type": "OUT",
     "named": false
   },
   {
@@ -755,10 +1044,6 @@
     "named": false
   },
   {
-    "type": "heap",
-    "named": false
-  },
-  {
     "type": "height",
     "named": false
   },
@@ -779,15 +1064,15 @@
     "named": false
   },
   {
-    "type": "label",
-    "named": false
-  },
-  {
     "type": "out",
     "named": false
   },
   {
     "type": "set",
+    "named": false
+  },
+  {
+    "type": "urcl",
     "named": false
   },
   {

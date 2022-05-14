@@ -7,9 +7,7 @@ const inst_convert = (insts) => Object.fromEntries(
 
 const instructions = inst_convert({
     height: $ => $.number,
-    label: $ => $.data_label,
     const: $ => $._literal,
-    heap: $ => $.number,
     call: $ => $.function_name,
     get: $ => $.number,
     set: $ => $.number,
@@ -27,7 +25,7 @@ module.exports = grammar({
     rules: {
         source_file: $ => seq(
             repeat($.definition),
-            repeat(choice($.func, $.custom_instruction)),
+            repeat($._func),
         ),
 
         comment: $ => choice(
@@ -46,8 +44,9 @@ module.exports = grammar({
 
         function_name: $ => token(seq("$", /\w+/)),
 
-        array: $ => seq("[", repeat($._literal), "]"),
-        _literal: $ => choice($.number, $.char_literal, $.macro),
+        array: $ => seq("[", repeat($._const_literal), "]"),
+        _const_literal: $ => choice($.number, $.char_literal, $.macro),
+        _literal: $ => choice($._const_literal, $.mem, $.data_label),
 
         number: $ => choice(
             /0b[0-1]+/,
@@ -66,13 +65,15 @@ module.exports = grammar({
 
         macro: $ => seq("@", field("name", $.identifier)),
 
+        mem: $ => seq("#", field("address", /([1-9]0*)+|0/)),
+
         port: $ => seq("%", field("name", $.identifier)),
 
         inst_label: $ => seq(":", field("name", $.identifier)),
         data_label: $ => seq(".", field("name", $.identifier)),
         definition: $ => seq(
             field("label", $.data_label),
-            field("value", choice($._literal, $.array)),
+            field("value", choice($._const_literal, $.array)),
         ),
 
         stack_behaviour: $ => seq(
@@ -86,6 +87,11 @@ module.exports = grammar({
             repeat($._instruction),
             "}",
         ),
+        _func: $ => choice(
+            $.func,
+            $.inst,
+            $.urcl,
+        ),
         func: $ => seq(
             "func",
             field("name", $.function_name),
@@ -96,7 +102,7 @@ module.exports = grammar({
             )),
             field("instructions", $.instruction_list),
         ),
-        custom_instruction: $ => seq(
+        inst: $ => seq(
             "inst",
             field("name", $.identifier),
             optional(field("stack", $.stack_behaviour)),
@@ -105,6 +111,12 @@ module.exports = grammar({
                 field("locals", $.number)
             )),
             field("instructions", $.instruction_list),
+        ),
+        urcl: $ => seq(
+            "urcl",
+            field("name", $.identifier),
+            optional(field("stack", $.stack_behaviour)),
+            field("instructions", $.urcl_instruction_list),
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
@@ -116,5 +128,61 @@ module.exports = grammar({
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
         instruction: $ => seq(optional(field("label", $.inst_label)), field("opcode", $.identifier)),
+
+        urcl_instruction_list: $ => seq(
+            "{",
+            repeat($._urcl_instruction),
+            "}",
+        ),
+
+        _urcl_instruction: $ => choice(
+            $.jmp,
+            $.urcl_in,
+            $.urcl_out,
+            $.urcl_instruction,
+        ),
+
+        register: $ => seq("$", field("idx", /([1-9]0*)+|0/)),
+
+        _value: $ => choice($.register, $._literal),
+
+        unary_source: $ => $.register,
+        binary_source: $ => seq(
+            field("src1", $.register),
+            field("src2", $.register),
+        ),
+
+        jmp: $ => seq(
+            optional(field("label", $.inst_label)),
+            "JMP",
+            field("dest", $.inst_label),
+        ),
+
+        urcl_in: $ => seq(
+            optional(field("label", $.inst_label)),
+            "IN",
+            field("dest", $.register),
+            field("source", $.port),
+        ),
+        
+        urcl_out: $ => seq(
+            optional(field("label", $.inst_label)),
+            "OUT",
+            field("dest", $.port),
+            field("source", $._value),
+        ),
+
+        urcl_instruction: $ => seq(
+            optional(field("label", $.inst_label)),
+            field("op", $.identifier),
+            field("dest", $.register),
+            choice(
+                field("source", $._value),
+                seq(
+                    field("source1", $._value),
+                    field("source2", $._value),
+                ),
+            ),
+        ),
     },
 })
