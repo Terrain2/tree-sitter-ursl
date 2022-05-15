@@ -9,7 +9,7 @@ func $main {
     out %NUMB
 }
 
-func $fib : 1 -> 1 {
+func $fib 1 -> 1 {
     get 0
     const 0
     equal
@@ -39,11 +39,11 @@ func $fib : 1 -> 1 {
     ret
 }
 
-inst x : 1 -> 1 {
+inst x 1 -> 1 {
 
 }
 
-urcl example : 1 -> 1 {
+urcl example 1 -> 1 {
     :a IMM $0 #0
     :a JMP :a
 

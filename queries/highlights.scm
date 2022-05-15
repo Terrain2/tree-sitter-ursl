@@ -12,10 +12,6 @@
 (char) @string
 (char_escape) @string.special
 
-(stack_behaviour
-    ":" @punctuation.delimiter
-)
-
 (inst name: (identifier) @instruction)
 (urcl name: (identifier) @instruction)
 

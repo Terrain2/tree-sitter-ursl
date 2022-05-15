@@ -77,7 +77,6 @@ module.exports = grammar({
         ),
 
         stack_behaviour: $ => seq(
-            ":",
             field("params", $.number),
             "->",
             field("returns", $.number),
