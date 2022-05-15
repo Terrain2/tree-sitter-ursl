@@ -666,6 +666,26 @@
     "type": "urcl",
     "named": true,
     "fields": {
+      "branch": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "urcl_instruction_list",
+            "named": true
+          }
+        ]
+      },
+      "branch_label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
       "instructions": {
         "multiple": false,
         "required": true,

@@ -13,10 +13,11 @@
 (char_escape) @string.special
 
 (inst name: (identifier) @instruction)
-(urcl name: (identifier) @instruction)
+(urcl name: (identifier) @instruction "branch" @keyword)
 
 (instruction (identifier) @instruction)
 (urcl_instruction op: (identifier) @instruction)
+(branch "branch" @instruction)
 
 [
     "->"
@@ -41,7 +42,6 @@
     "in"
     "out"
     "jump"
-    "branch"
     "JMP"
     "IN"
     "OUT"

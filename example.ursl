@@ -56,3 +56,9 @@ urcl example 1 -> 1 {
     IN $0 %NUMB
     OUT %NUMB $1
 }
+
+urcl equal 2 -> 1 {
+    SETE $1 $1 $2
+} branch :dest {
+    BRE :dest $1 $2
+}

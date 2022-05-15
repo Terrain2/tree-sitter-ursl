@@ -536,6 +536,39 @@
             "type": "SYMBOL",
             "name": "urcl_instruction_list"
           }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "branch"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "branch_label",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "inst_label"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "branch",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "urcl_instruction_list"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },

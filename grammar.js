@@ -116,6 +116,11 @@ module.exports = grammar({
             field("name", $.identifier),
             optional(field("stack", $.stack_behaviour)),
             field("instructions", $.urcl_instruction_list),
+            optional(seq(
+                "branch",
+                field("branch_label", $.inst_label),
+                field("branch", $.urcl_instruction_list),
+            )),
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
