@@ -1152,43 +1152,44 @@
           "type": "FIELD",
           "name": "dest",
           "content": {
-            "type": "SYMBOL",
-            "name": "register"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "register"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "inst_label"
+              }
+            ]
           }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "source",
-              "content": {
+          "type": "FIELD",
+          "name": "source",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
                 "type": "SYMBOL",
                 "name": "_value"
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_value"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_value"
+                  }
+                ]
               }
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "FIELD",
-                  "name": "source1",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_value"
-                  }
-                },
-                {
-                  "type": "FIELD",
-                  "name": "source2",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_value"
-                  }
-                }
-              ]
-            }
-          ]
+            ]
+          }
         }
       ]
     }

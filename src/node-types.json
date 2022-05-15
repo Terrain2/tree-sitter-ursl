@@ -743,6 +743,10 @@
         "required": true,
         "types": [
           {
+            "type": "inst_label",
+            "named": true
+          },
+          {
             "type": "register",
             "named": true
           }
@@ -769,68 +773,8 @@
         ]
       },
       "source": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "char_literal",
-            "named": true
-          },
-          {
-            "type": "data_label",
-            "named": true
-          },
-          {
-            "type": "macro",
-            "named": true
-          },
-          {
-            "type": "mem",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "register",
-            "named": true
-          }
-        ]
-      },
-      "source1": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "char_literal",
-            "named": true
-          },
-          {
-            "type": "data_label",
-            "named": true
-          },
-          {
-            "type": "macro",
-            "named": true
-          },
-          {
-            "type": "mem",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "register",
-            "named": true
-          }
-        ]
-      },
-      "source2": {
-        "multiple": false,
-        "required": false,
+        "multiple": true,
+        "required": true,
         "types": [
           {
             "type": "char_literal",

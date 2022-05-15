@@ -163,7 +163,7 @@ module.exports = grammar({
             field("dest", $.register),
             field("source", $.port),
         ),
-        
+
         urcl_out: $ => seq(
             optional(field("label", $.inst_label)),
             "OUT",
@@ -174,14 +174,11 @@ module.exports = grammar({
         urcl_instruction: $ => seq(
             optional(field("label", $.inst_label)),
             field("op", $.identifier),
-            field("dest", $.register),
-            choice(
-                field("source", $._value),
-                seq(
-                    field("source1", $._value),
-                    field("source2", $._value),
-                ),
-            ),
+            field("dest", choice($.register, $.inst_label)),
+            field("source", choice(
+                $._value,
+                seq($._value, $._value),
+            )),
         ),
     },
 })
