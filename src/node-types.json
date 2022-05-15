@@ -323,22 +323,32 @@
     "type": "inst",
     "named": true,
     "fields": {
+      "branch": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "urcl_instruction_list",
+            "named": true
+          }
+        ]
+      },
+      "branch_label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
       "instructions": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "locals": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "number",
+            "type": "urcl_instruction_list",
             "named": true
           }
         ]
@@ -628,10 +638,6 @@
         {
           "type": "inst",
           "named": true
-        },
-        {
-          "type": "urcl",
-          "named": true
         }
       ]
     }
@@ -656,62 +662,6 @@
         "types": [
           {
             "type": "number",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "urcl",
-    "named": true,
-    "fields": {
-      "branch": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "urcl_instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "branch_label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "instructions": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "urcl_instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "stack": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "stack_behaviour",
             "named": true
           }
         ]
@@ -1033,10 +983,6 @@
   },
   {
     "type": "set",
-    "named": false
-  },
-  {
-    "type": "urcl",
     "named": false
   },
   {

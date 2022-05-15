@@ -25,7 +25,7 @@ module.exports = grammar({
     rules: {
         source_file: $ => seq(
             repeat($.definition),
-            repeat($._func),
+            repeat(choice($.func, $.inst)),
         ),
 
         comment: $ => choice(
@@ -86,11 +86,6 @@ module.exports = grammar({
             repeat($._instruction),
             "}",
         ),
-        _func: $ => choice(
-            $.func,
-            $.inst,
-            $.urcl,
-        ),
         func: $ => seq(
             "func",
             field("name", $.function_name),
@@ -103,16 +98,6 @@ module.exports = grammar({
         ),
         inst: $ => seq(
             "inst",
-            field("name", $.identifier),
-            optional(field("stack", $.stack_behaviour)),
-            optional(seq(
-                "+",
-                field("locals", $.number)
-            )),
-            field("instructions", $.instruction_list),
-        ),
-        urcl: $ => seq(
-            "urcl",
             field("name", $.identifier),
             optional(field("stack", $.stack_behaviour)),
             field("instructions", $.urcl_instruction_list),

@@ -39,11 +39,7 @@ func $fib 1 -> 1 {
     ret
 }
 
-inst x 1 -> 1 {
-
-}
-
-urcl example 1 -> 1 {
+inst example 1 -> 1 {
     :a IMM $0 #0
     :a JMP :a
 
@@ -57,7 +53,7 @@ urcl example 1 -> 1 {
     OUT %NUMB $1
 }
 
-urcl equal 2 -> 1 {
+inst equal 2 -> 1 {
     SETE $1 $1 $2
 } branch :dest {
     BRE :dest $1 $2

@@ -15,8 +15,17 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_func"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "func"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "inst"
+              }
+            ]
           }
         }
       ]
@@ -349,23 +358,6 @@
         }
       ]
     },
-    "_func": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "func"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "inst"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "urcl"
-        }
-      ]
-    },
     "func": {
       "type": "SEQ",
       "members": [
@@ -438,72 +430,6 @@
         {
           "type": "STRING",
           "value": "inst"
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "stack",
-              "content": {
-                "type": "SYMBOL",
-                "name": "stack_behaviour"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "+"
-                },
-                {
-                  "type": "FIELD",
-                  "name": "locals",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "instructions",
-          "content": {
-            "type": "SYMBOL",
-            "name": "instruction_list"
-          }
-        }
-      ]
-    },
-    "urcl": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "urcl"
         },
         {
           "type": "FIELD",

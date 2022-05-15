@@ -12,8 +12,9 @@
 (char) @string
 (char_escape) @string.special
 
+; two separate things so that it doesn't require a branch clause
 (inst name: (identifier) @instruction)
-(urcl name: (identifier) @instruction "branch" @keyword)
+(inst "branch" @keyword)
 
 (instruction (identifier) @instruction)
 (urcl_instruction op: (identifier) @instruction)
@@ -31,7 +32,6 @@
 [
     "inst"
     "func"
-    "urcl"
     "height"
 ] @keyword
 [
