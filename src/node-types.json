@@ -49,6 +49,32 @@
     }
   },
   {
+    "type": "branch_block",
+    "named": true,
+    "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "urcl_instruction_list",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "call",
     "named": true,
     "fields": {
@@ -328,17 +354,7 @@
         "required": false,
         "types": [
           {
-            "type": "urcl_instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "branch_label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
+            "type": "branch_block",
             "named": true
           }
         ]

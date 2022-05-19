@@ -12,13 +12,12 @@
 (char) @string
 (char_escape) @string.special
 
-; two separate things so that it doesn't require a branch clause
 (inst name: (identifier) @instruction)
-(inst "branch" @keyword)
 
 (instruction (identifier) @instruction)
 (urcl_instruction op: (identifier) @instruction)
 (branch "branch" @instruction)
+(branch_block "branch" @keyword)
 
 [
     "->"
