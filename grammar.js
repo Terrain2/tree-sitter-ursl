@@ -132,7 +132,9 @@ module.exports = grammar({
             $.urcl_instruction,
         ),
 
-        register: $ => seq("$", field("idx", /([1-9]0*)+|0/)),
+        register: $ => seq("$", field("idx", $.register_index)),
+
+        register_index: $ => /([1-9]0*)+|0/,
 
         _value: $ => choice($.register, $._literal),
 

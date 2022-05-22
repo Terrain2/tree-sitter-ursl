@@ -929,11 +929,15 @@
           "type": "FIELD",
           "name": "idx",
           "content": {
-            "type": "PATTERN",
-            "value": "([1-9]0*)+|0"
+            "type": "SYMBOL",
+            "name": "register_index"
           }
         }
       ]
+    },
+    "register_index": {
+      "type": "PATTERN",
+      "value": "([1-9]0*)+|0"
     },
     "_value": {
       "type": "CHOICE",

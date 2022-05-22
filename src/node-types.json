@@ -607,6 +607,22 @@
   {
     "type": "register",
     "named": true,
+    "fields": {
+      "idx": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register_index",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "register_index",
+    "named": true,
     "fields": {}
   },
   {
