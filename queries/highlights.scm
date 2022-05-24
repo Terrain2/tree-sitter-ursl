@@ -12,11 +12,8 @@
 (char) @string
 (char_escape) @string.special
 
-(inst name: (identifier) @instruction)
-
-(instruction (identifier) @instruction)
+(instruction_name) @instruction
 (urcl_instruction op: (identifier) @instruction)
-(branch (identifier) @instruction "branch" @keyword)
 (branch_block "branch" @keyword)
 
 [
@@ -39,6 +36,7 @@
     "inst"
     "func"
     "height"
+    "branch"
 ] @keyword
 [
     "JMP"

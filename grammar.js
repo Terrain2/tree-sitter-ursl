@@ -1,3 +1,8 @@
+// keyword extraction was not working well with instruction_name, so i just removed it. URSL compilation isn't that performance sensitive anyways
+// These are at the top because they're reused as terminal symbols
+const IDENT = /[A-Za-z_\d]+/;
+const INDEX = /([1-9]0*)+|0/;
+
 const i = (f) => $ => seq(optional(field("label", $.inst_label)), f($));
 
 const inst_convert = (insts) => Object.fromEntries(
@@ -22,13 +27,13 @@ const instructions = inst_convert({
 module.exports = grammar({
     name: "URSL",
     extras: $ => [/\s+/, $.comment],
-    word: $ => $.identifier,
 
     rules: {
         source_file: $ => seq(
             repeat($.definition),
             repeat(choice($.func, $.inst)),
         ),
+        identifier: $ => IDENT,
 
         comment: $ => choice(
             // these weren't working properly, so i copied the ones from C# grammar.
@@ -38,18 +43,13 @@ module.exports = grammar({
             seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"),
         ),
 
-        // when \d can be at the start, for some reason this overwrites numbers and inserts an error node with an identifier.
-        // probably something to do with keyword extraction, i.e. the ``word`` first above the rules
-        // but i genuinely have no fucking clue how to fix that without changing the semantics of everything else
-        // so labels and functions cannot start with a digit
-        identifier: $ => /([A-Za-z_]\d*)+/,
-
         // Instruction names can also have dots, which allow for a nicer representation of specializing for operand type, etc.
         // This is fine, because instructions are not translated to labels, they are inlined, so i have no obligation to give them unique URCL-compatible names
         // They cannot start with . because otherwise it might be ambiguous for data labels (though i don't think that would be an issue currently, or probably ever, but better safe than sorry)
-        instruction_name: $ => /([A-Za-z_][\d\.]*)+/,
+        instruction_name: $ => /([A-Za-z_\d]\.*)+/,
 
-        function_name: $ => token(seq("$", /\w+/)),
+        // Cannot start with a digit like if it had \w+, because it would be ambiguous with regs for URCL blocks (how did tree-sitter not catch that?)
+        function_name: $ => token(seq("$", IDENT)),
 
         array: $ => seq("[", repeat($._literal), "]"),
         _literal: $ => choice($.number, $.char_literal, $.macro, $.mem, $.data_label, $.function_name),
@@ -69,14 +69,12 @@ module.exports = grammar({
         char: $ => /[^\\'\r\n]/,
         char_escape: $ => /\\['\\nrt0]/,
 
-        macro: $ => seq("@", field("name", $.identifier)),
+        macro: $ => token(seq("@", IDENT)),
+        mem: $ => token(seq("#", INDEX)),
+        port: $ => token(seq("%", IDENT)),
 
-        mem: $ => seq("#", field("address", /([1-9]0*)+|0/)),
-
-        port: $ => seq("%", field("name", $.identifier)),
-
-        inst_label: $ => seq(":", field("name", $.identifier)),
-        data_label: $ => seq(".", field("name", $.identifier)),
+        inst_label: $ => token(seq(":", IDENT)),
+        data_label: $ => token(seq(".", IDENT)),
         definition: $ => seq(
             field("label", $.data_label),
             field("value", choice($._literal, $.array)),
@@ -104,7 +102,7 @@ module.exports = grammar({
         ),
         inst: $ => seq(
             "inst",
-            field("name", $.identifier),
+            field("name", $.instruction_name),
             optional(field("stack", $.stack_behaviour)),
             field("instructions", $.urcl_instruction_list),
             optional(field("branch", $.branch_block))
@@ -122,10 +120,10 @@ module.exports = grammar({
 
         ...instructions,
 
-        branch: i($ => seq(field("opcode", $.identifier), "branch", field("operand", $.inst_label))),
+        branch: i($ => seq(field("opcode", $.instruction_name), "branch", field("operand", $.inst_label))),
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
-        instruction: i($ => seq(field("opcode", $.instructon_name))),
+        instruction: i($ => seq(field("opcode", $.instruction_name))),
 
         urcl_instruction_list: $ => seq(
             "{",
@@ -140,9 +138,7 @@ module.exports = grammar({
             $.urcl_instruction,
         ),
 
-        register: $ => seq("$", field("idx", $.register_index)),
-
-        register_index: $ => /([1-9]0*)+|0/,
+        register: $ => token(seq("$", INDEX)),
 
         _value: $ => choice($.register, $._literal),
 

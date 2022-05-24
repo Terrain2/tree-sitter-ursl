@@ -12,7 +12,19 @@
           "named": true
         },
         {
+          "type": "data_label",
+          "named": true
+        },
+        {
+          "type": "function_name",
+          "named": true
+        },
+        {
           "type": "macro",
+          "named": true
+        },
+        {
+          "type": "mem",
           "named": true
         },
         {
@@ -41,7 +53,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "instruction_name",
             "named": true
           }
         ]
@@ -162,6 +174,10 @@
             "named": true
           },
           {
+            "type": "function_name",
+            "named": true
+          },
+          {
             "type": "macro",
             "named": true
           },
@@ -171,22 +187,6 @@
           },
           {
             "type": "number",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "data_label",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
             "named": true
           }
         ]
@@ -220,7 +220,19 @@
             "named": true
           },
           {
+            "type": "data_label",
+            "named": true
+          },
+          {
+            "type": "function_name",
+            "named": true
+          },
+          {
             "type": "macro",
+            "named": true
+          },
+          {
+            "type": "mem",
             "named": true
           },
           {
@@ -330,6 +342,32 @@
     }
   },
   {
+    "type": "icall",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "stack_behaviour",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "in",
     "named": true,
     "fields": {
@@ -384,7 +422,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "instruction_name",
             "named": true
           }
         ]
@@ -395,22 +433,6 @@
         "types": [
           {
             "type": "stack_behaviour",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "inst_label",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
             "named": true
           }
         ]
@@ -436,7 +458,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "instruction_name",
             "named": true
           }
         ]
@@ -469,6 +491,10 @@
         },
         {
           "type": "height",
+          "named": true
+        },
+        {
+          "type": "icall",
           "named": true
         },
         {
@@ -547,27 +573,6 @@
     }
   },
   {
-    "type": "macro",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "mem",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "number",
     "named": true,
     "fields": {}
@@ -597,43 +602,6 @@
         ]
       }
     }
-  },
-  {
-    "type": "port",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "register",
-    "named": true,
-    "fields": {
-      "idx": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "register_index",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "register_index",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "set",
@@ -797,6 +765,10 @@
             "named": true
           },
           {
+            "type": "function_name",
+            "named": true
+          },
+          {
             "type": "macro",
             "named": true
           },
@@ -880,6 +852,10 @@
             "named": true
           },
           {
+            "type": "function_name",
+            "named": true
+          },
+          {
             "type": "macro",
             "named": true
           },
@@ -900,18 +876,6 @@
     }
   },
   {
-    "type": "#",
-    "named": false
-  },
-  {
-    "type": "$",
-    "named": false
-  },
-  {
-    "type": "%",
-    "named": false
-  },
-  {
     "type": "'",
     "named": false
   },
@@ -924,10 +888,6 @@
     "named": false
   },
   {
-    "type": ".",
-    "named": false
-  },
-  {
     "type": "/",
     "named": false
   },
@@ -937,14 +897,6 @@
   },
   {
     "type": "//",
-    "named": false
-  },
-  {
-    "type": ":",
-    "named": false
-  },
-  {
-    "type": "@",
     "named": false
   },
   {
@@ -988,6 +940,10 @@
     "named": false
   },
   {
+    "type": "data_label",
+    "named": true
+  },
+  {
     "type": "func",
     "named": false
   },
@@ -1004,6 +960,10 @@
     "named": false
   },
   {
+    "type": "icall",
+    "named": false
+  },
+  {
     "type": "identifier",
     "named": true
   },
@@ -1016,12 +976,36 @@
     "named": false
   },
   {
+    "type": "inst_label",
+    "named": true
+  },
+  {
+    "type": "instruction_name",
+    "named": true
+  },
+  {
     "type": "jump",
     "named": false
   },
   {
+    "type": "macro",
+    "named": true
+  },
+  {
+    "type": "mem",
+    "named": true
+  },
+  {
     "type": "out",
     "named": false
+  },
+  {
+    "type": "port",
+    "named": true
+  },
+  {
+    "type": "register",
+    "named": true
   },
   {
     "type": "set",
