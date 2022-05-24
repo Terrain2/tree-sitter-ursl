@@ -16,7 +16,7 @@
 
 (instruction (identifier) @instruction)
 (urcl_instruction op: (identifier) @instruction)
-(branch "branch" @instruction)
+(branch (identifier) @instruction "branch" @keyword)
 (branch_block "branch" @keyword)
 
 [
@@ -29,11 +29,6 @@
 ] @punctuation.bracket
 
 [
-    "inst"
-    "func"
-    "height"
-] @keyword
-[
     "const"
     "call"
     "get"
@@ -41,6 +36,11 @@
     "in"
     "out"
     "jump"
+    "inst"
+    "func"
+    "height"
+] @keyword
+[
     "JMP"
     "IN"
     "OUT"

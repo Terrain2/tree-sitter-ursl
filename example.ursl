@@ -12,13 +12,11 @@ func $main {
 func $fib 1 -> 1 {
     get 0
     const 0
-    equal
-    branch :base_case
+    eq branch :base_case
 
     get 0
     const 1
-    equal
-    branch :base_case
+    eq branch :base_case
 
     get 0
     const 1

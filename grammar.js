@@ -1,7 +1,9 @@
+const i = (f) => $ => seq(optional(field("label", $.inst_label)), f($));
+
 const inst_convert = (insts) => Object.fromEntries(
     Object.entries(insts).map(([opcode, operand]) => [
         opcode,
-        $ => seq(optional(field("label", $.inst_label)), opcode, field("operand", operand($))),
+        i($ => seq(opcode, field("operand", operand($)))),
     ]),
 );
 
@@ -9,12 +11,12 @@ const instructions = inst_convert({
     height: $ => $.number,
     const: $ => $._literal,
     call: $ => $.function_name,
+    icall: $ => $.stack_behaviour,
     get: $ => $.number,
     set: $ => $.number,
     out: $ => $.port,
     in: $ => $.port,
     jump: $ => $.inst_label,
-    branch: $ => $.inst_label,
 });
 
 module.exports = grammar({
@@ -42,11 +44,15 @@ module.exports = grammar({
         // so labels and functions cannot start with a digit
         identifier: $ => /([A-Za-z_]\d*)+/,
 
+        // Instruction names can also have dots, which allow for a nicer representation of specializing for operand type, etc.
+        // This is fine, because instructions are not translated to labels, they are inlined, so i have no obligation to give them unique URCL-compatible names
+        // They cannot start with . because otherwise it might be ambiguous for data labels (though i don't think that would be an issue currently, or probably ever, but better safe than sorry)
+        instruction_name: $ => /([A-Za-z_][\d\.]*)+/,
+
         function_name: $ => token(seq("$", /\w+/)),
 
-        array: $ => seq("[", repeat($._const_literal), "]"),
-        _const_literal: $ => choice($.number, $.char_literal, $.macro),
-        _literal: $ => choice($._const_literal, $.mem, $.data_label),
+        array: $ => seq("[", repeat($._literal), "]"),
+        _literal: $ => choice($.number, $.char_literal, $.macro, $.mem, $.data_label, $.function_name),
 
         number: $ => choice(
             /0b[0-1]+/,
@@ -73,7 +79,7 @@ module.exports = grammar({
         data_label: $ => seq(".", field("name", $.identifier)),
         definition: $ => seq(
             field("label", $.data_label),
-            field("value", choice($._const_literal, $.array)),
+            field("value", choice($._literal, $.array)),
         ),
 
         stack_behaviour: $ => seq(
@@ -110,14 +116,16 @@ module.exports = grammar({
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
+            $.branch,
             $.instruction
         ),
 
         ...instructions,
 
+        branch: i($ => seq(field("opcode", $.identifier), "branch", field("operand", $.inst_label))),
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
-        instruction: $ => seq(optional(field("label", $.inst_label)), field("opcode", $.identifier)),
+        instruction: i($ => seq(field("opcode", $.instructon_name))),
 
         urcl_instruction_list: $ => seq(
             "{",
