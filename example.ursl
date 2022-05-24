@@ -4,8 +4,9 @@
 .nums [ 1 2 3 4 /* ... */ @MAX ]
 
 func $main {
+    const $fib
     const 0
-    call $fib
+    icall 1 -> 1
     out %NUMB
 }
 

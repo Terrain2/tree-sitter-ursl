@@ -28,6 +28,7 @@
 [
     "const"
     "call"
+    "icall"
     "get"
     "set"
     "in"
