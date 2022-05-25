@@ -963,15 +963,23 @@
               "value": "let"
             },
             {
-              "type": "REPEAT1",
+              "type": "FIELD",
+              "name": "names",
               "content": {
-                "type": "SYMBOL",
-                "name": "identifier"
+                "type": "REPEAT1",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                }
               }
             },
             {
-              "type": "SYMBOL",
-              "name": "instruction_list"
+              "type": "FIELD",
+              "name": "instructions",
+              "content": {
+                "type": "SYMBOL",
+                "name": "instruction_list"
+              }
             }
           ]
         }

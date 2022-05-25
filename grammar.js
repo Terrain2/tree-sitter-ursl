@@ -122,7 +122,7 @@ module.exports = grammar({
 
         ...instructions,
 
-        let: i($ => seq("let", repeat1($.identifier), $.instruction_list)),
+        let: i($ => seq("let", field("names", repeat1($.identifier)), field("instructions", $.instruction_list))),
         branch: i($ => seq(field("opcode", $.instruction_name), "branch", field("operand", $.inst_label))),
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser

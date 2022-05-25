@@ -584,6 +584,16 @@
     "type": "let",
     "named": true,
     "fields": {
+      "instructions": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "instruction_list",
+            "named": true
+          }
+        ]
+      },
       "label": {
         "multiple": false,
         "required": false,
@@ -593,21 +603,17 @@
             "named": true
           }
         ]
+      },
+      "names": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "instruction_list",
-          "named": true
-        }
-      ]
     }
   },
   {
