@@ -141,8 +141,6 @@ module.exports = grammar({
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
         instruction: i($ => seq(field("opcode", $.instruction_name))),
 
-        permutation: i($ => seq("[", repeat1($.identifier), "]", "->", "[", repeat($.identifier), "]")),
-
         urcl_instruction_list: $ => seq(
             "{",
             repeat($._urcl_instruction),
