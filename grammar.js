@@ -130,18 +130,18 @@ module.exports = grammar({
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
-            $.permutation,
             $.branch,
             $.instruction
         ),
 
         ...instructions,
 
-        permutation: i($ => seq("[", repeat1($.identifier), "]", "->", "[", repeat($.identifier), "]")),
         branch: i($ => seq(field("opcode", $.instruction_name), "branch", field("operand", $.inst_label))),
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
         instruction: i($ => seq(field("opcode", $.instruction_name))),
+
+        permutation: i($ => seq("[", repeat1($.identifier), "]", "->", "[", repeat($.identifier), "]")),
 
         urcl_instruction_list: $ => seq(
             "{",

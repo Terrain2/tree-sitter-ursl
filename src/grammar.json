@@ -657,10 +657,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "permutation"
-        },
-        {
-          "type": "SYMBOL",
           "name": "branch"
         },
         {
