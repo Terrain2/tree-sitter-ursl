@@ -17,12 +17,12 @@ const instructions = inst_convert({
     const: $ => $._literal,
     call: $ => $.function_name,
     icall: $ => $.stack_behaviour,
-    stack: $ => $.number,
-    get: $ => $.identifier,
-    set: $ => $.identifier,
+    get: $ => $.number,
+    set: $ => $.number,
     out: $ => $.port,
     in: $ => $.port,
     jump: $ => $.inst_label,
+    perm: $ => $.permutation,
 });
 
 module.exports = grammar({
@@ -32,7 +32,7 @@ module.exports = grammar({
     rules: {
         source_file: $ => seq(
             repeat($.definition),
-            repeat(choice($.func, $.inst)),
+            repeat(choice($.func, $.inst, $.inst_permutation)),
         ),
         identifier: $ => IDENT,
 
@@ -108,6 +108,21 @@ module.exports = grammar({
             field("instructions", $.urcl_instruction_list),
             optional(field("branch", $.branch_block))
         ),
+        inst_permutation: $ => seq(
+            "inst",
+            field("name", $.instruction_name),
+            field("permutation", $.permutation),
+        ),
+        permutation: $ => seq(
+            field("input", $.stack_frame),
+            "->",
+            field("output", $.stack_frame),
+        ),
+        stack_frame: $ => seq(
+            "[",
+            field("items", repeat($.identifier)),
+            "]",
+        ),
         branch_block: $ => seq(
             "branch",
             field("label", $.inst_label),
@@ -115,14 +130,14 @@ module.exports = grammar({
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
-            $.let,
+            $.permutation,
             $.branch,
             $.instruction
         ),
 
         ...instructions,
 
-        let: i($ => seq("let", field("names", repeat1($.identifier)), field("instructions", $.instruction_list))),
+        permutation: i($ => seq("[", repeat1($.identifier), "]", "->", "[", repeat($.identifier), "]")),
         branch: i($ => seq(field("opcode", $.instruction_name), "branch", field("operand", $.inst_label))),
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser

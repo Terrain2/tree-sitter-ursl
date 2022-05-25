@@ -308,7 +308,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "number",
             "named": true
           }
         ]
@@ -440,6 +440,32 @@
     }
   },
   {
+    "type": "inst_permutation",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "instruction_name",
+            "named": true
+          }
+        ]
+      },
+      "permutation": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "permutation",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "instruction",
     "named": true,
     "fields": {
@@ -510,19 +536,19 @@
           "named": true
         },
         {
-          "type": "let",
-          "named": true
-        },
-        {
           "type": "out",
           "named": true
         },
         {
-          "type": "set",
+          "type": "perm",
           "named": true
         },
         {
-          "type": "stack",
+          "type": "permutation",
+          "named": true
+        },
+        {
+          "type": "set",
           "named": true
         }
       ]
@@ -581,42 +607,6 @@
     }
   },
   {
-    "type": "let",
-    "named": true,
-    "fields": {
-      "instructions": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "instruction_list",
-            "named": true
-          }
-        ]
-      },
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "names": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "number",
     "named": true,
     "fields": {}
@@ -648,6 +638,58 @@
     }
   },
   {
+    "type": "perm",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "permutation",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "permutation",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "set",
     "named": true,
     "fields": {
@@ -666,7 +708,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "number",
             "named": true
           }
         ]
@@ -692,34 +734,12 @@
         {
           "type": "inst",
           "named": true
+        },
+        {
+          "type": "inst_permutation",
+          "named": true
         }
       ]
-    }
-  },
-  {
-    "type": "stack",
-    "named": true,
-    "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "operand": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "number",
-            "named": true
-          }
-        ]
-      }
     }
   },
   {
@@ -1058,10 +1078,6 @@
     "named": false
   },
   {
-    "type": "let",
-    "named": false
-  },
-  {
     "type": "macro",
     "named": true
   },
@@ -1074,6 +1090,10 @@
     "named": false
   },
   {
+    "type": "perm",
+    "named": false
+  },
+  {
     "type": "port",
     "named": true
   },
@@ -1083,10 +1103,6 @@
   },
   {
     "type": "set",
-    "named": false
-  },
-  {
-    "type": "stack",
     "named": false
   },
   {
