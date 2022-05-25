@@ -17,8 +17,9 @@ const instructions = inst_convert({
     const: $ => $._literal,
     call: $ => $.function_name,
     icall: $ => $.stack_behaviour,
-    get: $ => $.number,
-    set: $ => $.number,
+    stack: $ => $.number,
+    get: $ => $.identifier,
+    set: $ => $.identifier,
     out: $ => $.port,
     in: $ => $.port,
     jump: $ => $.inst_label,
@@ -114,12 +115,14 @@ module.exports = grammar({
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
+            $.let,
             $.branch,
             $.instruction
         ),
 
         ...instructions,
 
+        let: i($ => seq("let", repeat1($.identifier), $.instruction_list)),
         branch: i($ => seq(field("opcode", $.instruction_name), "branch", field("operand", $.inst_label))),
         // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
         // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser

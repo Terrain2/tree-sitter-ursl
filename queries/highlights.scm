@@ -14,7 +14,9 @@
 
 (instruction_name) @instruction
 (urcl_instruction op: (identifier) @instruction)
-(branch_block "branch" @keyword)
+(let (identifier) @variable)
+(get (identifier) @variable)
+(set (identifier) @variable)
 
 [
     "->"
@@ -37,6 +39,7 @@
     "inst"
     "func"
     "height"
+    "let"
     "branch"
 ] @keyword
 [

@@ -520,6 +520,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "stack"
+        },
+        {
+          "type": "SYMBOL",
           "name": "get"
         },
         {
@@ -537,6 +541,10 @@
         {
           "type": "SYMBOL",
           "name": "jump"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "let"
         },
         {
           "type": "SYMBOL",
@@ -700,6 +708,44 @@
         }
       ]
     },
+    "stack": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "inst_label"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "stack"
+            },
+            {
+              "type": "FIELD",
+              "name": "operand",
+              "content": {
+                "type": "SYMBOL",
+                "name": "number"
+              }
+            }
+          ]
+        }
+      ]
+    },
     "get": {
       "type": "SEQ",
       "members": [
@@ -731,7 +777,7 @@
               "name": "operand",
               "content": {
                 "type": "SYMBOL",
-                "name": "number"
+                "name": "identifier"
               }
             }
           ]
@@ -769,7 +815,7 @@
               "name": "operand",
               "content": {
                 "type": "SYMBOL",
-                "name": "number"
+                "name": "identifier"
               }
             }
           ]
@@ -885,6 +931,47 @@
                 "type": "SYMBOL",
                 "name": "inst_label"
               }
+            }
+          ]
+        }
+      ]
+    },
+    "let": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "inst_label"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "let"
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "instruction_list"
             }
           ]
         }

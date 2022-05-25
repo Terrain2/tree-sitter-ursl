@@ -57,3 +57,10 @@ inst equal 2 -> 1 {
 } branch :dest {
     BRE :dest $1 $2
 }
+
+func $bindings {
+    let variable {
+        get variable
+        set variable
+    }
+}
