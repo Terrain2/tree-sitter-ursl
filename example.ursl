@@ -11,8 +11,9 @@ inst rot [a b c] -> [c b a]
 inst over [a b] -> [a b a]
 
 func $main {
-    const $fib
     const 0
+    const $fib
+    perm [a b] -> [b a]
     icall 1 -> 1
     out %NUMB
 }
