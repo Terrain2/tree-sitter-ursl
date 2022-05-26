@@ -129,10 +129,14 @@
           "value": "["
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "items",
           "content": {
-            "type": "SYMBOL",
-            "name": "_literal"
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_literal"
+            }
           }
         },
         {

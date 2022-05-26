@@ -61,7 +61,7 @@ module.exports = grammar({
         // Cannot start with a digit like if it had \w+, because it would be ambiguous with regs for URCL blocks (how did tree-sitter not catch that?)
         function_name: $ => token(seq("$", IDENT)),
 
-        array: $ => seq("[", repeat($._literal), "]"),
+        array: $ => seq("[", field("items", repeat($._literal)), "]"),
         _literal: $ => choice($.number, $.char_literal, $.macro, $.mem, $.data_label, $.function_name),
 
         number: $ => choice(
