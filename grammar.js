@@ -1,6 +1,7 @@
 // keyword extraction was not working well with instruction_name, so i just removed it. URSL compilation isn't that performance sensitive anyways
 // These are at the top because they're reused as terminal symbols
-const IDENT = /[A-Za-z_\d]+/;
+// \d shouldn't be allowed as the first char to disambiguate .0 from labels and fixed/floating point in the future (if that is ever added to URCL, URSL will have equivalents)
+const IDENT = /([A-Za-z_]\d*)+/;
 const INDEX = /([1-9]0*)+|0/;
 
 const i = (f) => $ => seq(optional(field("label", $.inst_label)), f($));
@@ -8,21 +9,28 @@ const i = (f) => $ => seq(optional(field("label", $.inst_label)), f($));
 const inst_convert = (insts) => Object.fromEntries(
     Object.entries(insts).map(([opcode, operand]) => [
         opcode,
-        i($ => seq(opcode, field("operand", operand($)))),
+        i($ => operand == null ? opcode : seq(opcode, field("operand", operand($)))),
     ]),
 );
 
 const instructions = inst_convert({
     height: $ => $.number,
+    jump: $ => $.inst_label,
+    halt: null,
+
+    perm: $ => $.permutation,
     const: $ => $._literal,
+
+    in: $ => $.port,
+    out: $ => $.port,
+
     call: $ => $.function_name,
     icall: $ => $.stack_behaviour,
+    ret: null,
+
+    ref: $ => $.number,
     get: $ => $.number,
     set: $ => $.number,
-    out: $ => $.port,
-    in: $ => $.port,
-    jump: $ => $.inst_label,
-    perm: $ => $.permutation,
 });
 
 module.exports = grammar({
@@ -31,10 +39,16 @@ module.exports = grammar({
 
     rules: {
         source_file: $ => seq(
-            repeat($.definition),
-            repeat(choice($.func, $.inst, $.inst_permutation)),
+            field("headers", $.headers),
+            field("data", repeat($.definition)),
+            field("code", repeat(choice($.func, $.inst, $.inst_permutation))),
         ),
-        identifier: $ => IDENT,
+        headers: $ => seq(
+            "bits", field("bits", $.number),
+        ),
+        // These can really have whatever since they are erased in compilation and do not correspond to emitted labels
+        // I allow dots because i like it, and it's useful to represent compiler-generated variations of instructions
+        identifier: $ => /([A-Za-z_][\d\.]*)+/,
 
         comment: $ => choice(
             // these weren't working properly, so i copied the ones from C# grammar.
@@ -43,11 +57,6 @@ module.exports = grammar({
             seq("//", /[^\r\n]*/),
             seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"),
         ),
-
-        // Instruction names can also have dots, which allow for a nicer representation of specializing for operand type, etc.
-        // This is fine, because instructions are not translated to labels, they are inlined, so i have no obligation to give them unique URCL-compatible names
-        // They cannot start with . because otherwise it might be ambiguous for data labels (though i don't think that would be an issue currently, or probably ever, but better safe than sorry)
-        instruction_name: $ => /([A-Za-z_\d]\.*)+/,
 
         // Cannot start with a digit like if it had \w+, because it would be ambiguous with regs for URCL blocks (how did tree-sitter not catch that?)
         function_name: $ => token(seq("$", IDENT)),
@@ -86,11 +95,6 @@ module.exports = grammar({
             "->",
             field("returns", $.number),
         ),
-        instruction_list: $ => seq(
-            "{",
-            repeat($._instruction),
-            "}",
-        ),
         func: $ => seq(
             "func",
             field("name", $.function_name),
@@ -99,18 +103,22 @@ module.exports = grammar({
                 "+",
                 field("locals", $.number)
             )),
-            field("instructions", $.instruction_list),
+            "{",
+            field("instructions", repeat($._instruction)),
+            "}",
         ),
         inst: $ => seq(
             "inst",
-            field("name", $.instruction_name),
+            field("name", $.identifier),
             optional(field("stack", $.stack_behaviour)),
-            field("instructions", $.urcl_instruction_list),
+            "{",
+            field("instructions", repeat($._urcl_instruction)),
+            "}",
             optional(field("branch", $.branch_block))
         ),
         inst_permutation: $ => seq(
             "inst",
-            field("name", $.instruction_name),
+            field("name", $.identifier),
             field("permutation", $.permutation),
         ),
         permutation: $ => seq(
@@ -126,26 +134,20 @@ module.exports = grammar({
         branch_block: $ => seq(
             "branch",
             field("label", $.inst_label),
-            field("instructions", $.urcl_instruction_list),
+            "{",
+            field("instructions", repeat($._urcl_instruction)),
+            "}",
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
             $.branch,
-            $.instruction
+            $.custom_instruction
         ),
 
         ...instructions,
 
-        branch: i($ => seq(field("opcode", $.instruction_name), "branch", field("operand", $.inst_label))),
-        // all zero-param instructions like add, mult, are up to the compiler and not parser lol.
-        // that's because there's not much semantic meaning to add here, as stack transitional behaviour isn't significant in the parser
-        instruction: i($ => seq(field("opcode", $.instruction_name))),
-
-        urcl_instruction_list: $ => seq(
-            "{",
-            repeat($._urcl_instruction),
-            "}",
-        ),
+        branch: i($ => seq(field("opcode", $.identifier), "branch", field("operand", $.inst_label))),
+        custom_instruction: i($ => seq(field("opcode", $.identifier))),
 
         _urcl_instruction: $ => choice(
             $.jmp,
@@ -186,7 +188,7 @@ module.exports = grammar({
 
         urcl_instruction: $ => seq(
             optional(field("label", $.inst_label)),
-            field("op", $.identifier),
+            field("op", $.identifier), // no validation is performed on URCL instruction names so allowing extra stuff (.) in the grammar is not an issue
             field("dest", choice($.register, $.inst_label)),
             field("source", choice(
                 $._value,

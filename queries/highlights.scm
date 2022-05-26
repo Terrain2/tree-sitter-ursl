@@ -12,8 +12,13 @@
 (char) @string
 (char_escape) @string.special
 
-(instruction_name) @instruction
+(branch opcode: (identifier) @instruction)
+(custom_instruction opcode: (identifier) @instruction)
 (urcl_instruction op: (identifier) @instruction)
+
+(inst name: (identifier) @instruction)
+(inst_permutation name: (identifier) @instruction)
+(stack_frame (identifier) @property)
 
 [
     "->"
@@ -24,20 +29,32 @@
     "{" "}" ; instruction lists
 ] @punctuation.bracket
 
-[
-    "const"
-    "call"
-    "icall"
-    "get"
-    "set"
-    "in"
-    "out"
-    "jump"
+[ ; actual keywords
+    "bits"
     "inst"
     "func"
+] @keyword
+
+[ ; core language instructions
     "perm"
+    "const"
     "height"
+
+    "in"
+    "out"
+
+    "jump"
     "branch"
+
+    "halt"
+
+    "call"
+    "icall"
+    "ret"
+
+    "ref"
+    "get"
+    "set"
 ] @keyword
 [
     "JMP"

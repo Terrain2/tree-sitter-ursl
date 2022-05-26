@@ -53,7 +53,7 @@
         "required": true,
         "types": [
           {
-            "type": "instruction_name",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -75,11 +75,23 @@
     "named": true,
     "fields": {
       "instructions": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
-            "type": "urcl_instruction_list",
+            "type": "jmp",
+            "named": true
+          },
+          {
+            "type": "urcl_in",
+            "named": true
+          },
+          {
+            "type": "urcl_instruction",
+            "named": true
+          },
+          {
+            "type": "urcl_out",
             "named": true
           }
         ]
@@ -194,6 +206,32 @@
     }
   },
   {
+    "type": "custom_instruction",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "opcode": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "definition",
     "named": true,
     "fields": {
@@ -248,11 +286,67 @@
     "named": true,
     "fields": {
       "instructions": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
-            "type": "instruction_list",
+            "type": "branch",
+            "named": true
+          },
+          {
+            "type": "call",
+            "named": true
+          },
+          {
+            "type": "const",
+            "named": true
+          },
+          {
+            "type": "custom_instruction",
+            "named": true
+          },
+          {
+            "type": "get",
+            "named": true
+          },
+          {
+            "type": "halt",
+            "named": true
+          },
+          {
+            "type": "height",
+            "named": true
+          },
+          {
+            "type": "icall",
+            "named": true
+          },
+          {
+            "type": "in",
+            "named": true
+          },
+          {
+            "type": "jump",
+            "named": true
+          },
+          {
+            "type": "out",
+            "named": true
+          },
+          {
+            "type": "perm",
+            "named": true
+          },
+          {
+            "type": "ref",
+            "named": true
+          },
+          {
+            "type": "ret",
+            "named": true
+          },
+          {
+            "type": "set",
             "named": true
           }
         ]
@@ -304,6 +398,38 @@
         ]
       },
       "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "halt",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "headers",
+    "named": true,
+    "fields": {
+      "bits": {
         "multiple": false,
         "required": true,
         "types": [
@@ -408,11 +534,23 @@
         ]
       },
       "instructions": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
-            "type": "urcl_instruction_list",
+            "type": "jmp",
+            "named": true
+          },
+          {
+            "type": "urcl_in",
+            "named": true
+          },
+          {
+            "type": "urcl_instruction",
+            "named": true
+          },
+          {
+            "type": "urcl_out",
             "named": true
           }
         ]
@@ -422,7 +560,7 @@
         "required": true,
         "types": [
           {
-            "type": "instruction_name",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -448,7 +586,7 @@
         "required": true,
         "types": [
           {
-            "type": "instruction_name",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -463,91 +601,6 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "instruction",
-    "named": true,
-    "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "opcode": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "instruction_name",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "instruction_list",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "branch",
-          "named": true
-        },
-        {
-          "type": "call",
-          "named": true
-        },
-        {
-          "type": "const",
-          "named": true
-        },
-        {
-          "type": "get",
-          "named": true
-        },
-        {
-          "type": "height",
-          "named": true
-        },
-        {
-          "type": "icall",
-          "named": true
-        },
-        {
-          "type": "in",
-          "named": true
-        },
-        {
-          "type": "instruction",
-          "named": true
-        },
-        {
-          "type": "jump",
-          "named": true
-        },
-        {
-          "type": "out",
-          "named": true
-        },
-        {
-          "type": "perm",
-          "named": true
-        },
-        {
-          "type": "set",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -686,6 +739,48 @@
     }
   },
   {
+    "type": "ref",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "ret",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "set",
     "named": true,
     "fields": {
@@ -714,28 +809,45 @@
   {
     "type": "source_file",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "definition",
-          "named": true
-        },
-        {
-          "type": "func",
-          "named": true
-        },
-        {
-          "type": "inst",
-          "named": true
-        },
-        {
-          "type": "inst_permutation",
-          "named": true
-        }
-      ]
+    "fields": {
+      "code": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "func",
+            "named": true
+          },
+          {
+            "type": "inst",
+            "named": true
+          },
+          {
+            "type": "inst_permutation",
+            "named": true
+          }
+        ]
+      },
+      "data": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "definition",
+            "named": true
+          }
+        ]
+      },
+      "headers": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "headers",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -891,33 +1003,6 @@
     }
   },
   {
-    "type": "urcl_instruction_list",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "jmp",
-          "named": true
-        },
-        {
-          "type": "urcl_in",
-          "named": true
-        },
-        {
-          "type": "urcl_instruction",
-          "named": true
-        },
-        {
-          "type": "urcl_out",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "urcl_out",
     "named": true,
     "fields": {
@@ -1022,6 +1107,10 @@
     "named": false
   },
   {
+    "type": "bits",
+    "named": false
+  },
+  {
     "type": "branch",
     "named": false
   },
@@ -1058,6 +1147,10 @@
     "named": false
   },
   {
+    "type": "halt",
+    "named": false
+  },
+  {
     "type": "height",
     "named": false
   },
@@ -1079,10 +1172,6 @@
   },
   {
     "type": "inst_label",
-    "named": true
-  },
-  {
-    "type": "instruction_name",
     "named": true
   },
   {
@@ -1110,8 +1199,16 @@
     "named": true
   },
   {
+    "type": "ref",
+    "named": false
+  },
+  {
     "type": "register",
     "named": true
+  },
+  {
+    "type": "ret",
+    "named": false
   },
   {
     "type": "set",
