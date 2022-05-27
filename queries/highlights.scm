@@ -31,6 +31,9 @@
 
 [ ; actual keywords
     "bits"
+    "minstack"
+    "minheap"
+    
     "inst"
     "func"
 ] @keyword

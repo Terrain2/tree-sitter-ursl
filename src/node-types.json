@@ -439,6 +439,26 @@
             "named": true
           }
         ]
+      },
+      "minheap": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "minstack": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
       }
     }
   },
@@ -1186,6 +1206,14 @@
   {
     "type": "mem",
     "named": true
+  },
+  {
+    "type": "minheap",
+    "named": false
+  },
+  {
+    "type": "minstack",
+    "named": false
   },
   {
     "type": "out",

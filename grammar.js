@@ -6,12 +6,10 @@ const INDEX = /([1-9]0*)+|0/;
 
 const i = (f) => $ => seq(optional(field("label", $.inst_label)), f($));
 
-const inst_convert = (insts) => Object.fromEntries(
-    Object.entries(insts).map(([opcode, operand]) => [
-        opcode,
-        i($ => operand == null ? opcode : seq(opcode, field("operand", operand($)))),
-    ]),
-);
+const inst_convert = (insts) => Object.fromEntries(Object.entries(insts).map(([opcode, operand]) => [
+    opcode, i($ => operand == null ? opcode : seq(opcode, field("operand", operand($))))
+]));
+const headers_convert = (headers) => Object.entries(headers).map(([header, value]) => $ => seq(header, field(header, value($))));
 
 const instructions = inst_convert({
     height: $ => $.number,
@@ -33,6 +31,12 @@ const instructions = inst_convert({
     set: $ => $.number,
 });
 
+const headers = headers_convert({
+    bits: $ => $.number,
+    minstack: $ => $.number,
+    minheap: $ => $.number,
+});
+
 module.exports = grammar({
     name: "URSL",
     extras: $ => [/\s+/, $.comment],
@@ -44,7 +48,7 @@ module.exports = grammar({
             field("code", repeat(choice($.func, $.inst, $.inst_permutation))),
         ),
         headers: $ => seq(
-            "bits", field("bits", $.number),
+            ...headers.map(h => h($)),
         ),
         // These can really have whatever since they are erased in compilation and do not correspond to emitted labels
         // I allow dots because i like it, and it's useful to represent compiler-generated variations of instructions

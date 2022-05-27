@@ -1,6 +1,8 @@
 // Note that this file is only testing grammar features and making sure everything parses fine. The example.ursl in the actual compiler repo (https://github.com/Terrain2/URSL/blob/main/example.ursl) is more up-to-date and meant to *validate* successfully and compile fine without errors too.
 
 bits 64
+minstack 200
+minheap 0
 
 .str [ 'H' 'e' 'l' 'l' 'o' ',' 0x20 'W' 'o' 'r' 'l' 'd' ]
 .escape '\n'
