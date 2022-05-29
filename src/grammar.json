@@ -50,22 +50,61 @@
       ]
     },
     "headers": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
           "type": "SEQ",
           "members": [
             {
-              "type": "STRING",
-              "value": "bits"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "bits"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "bits",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
             },
             {
-              "type": "FIELD",
-              "name": "bits",
-              "content": {
-                "type": "SYMBOL",
-                "name": "number"
-              }
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minstack"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minstack",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minheap"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minheap",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
             }
           ]
         },
@@ -73,16 +112,55 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "STRING",
-              "value": "minstack"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "bits"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "bits",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
             },
             {
-              "type": "FIELD",
-              "name": "minstack",
-              "content": {
-                "type": "SYMBOL",
-                "name": "number"
-              }
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minheap"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minheap",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minstack"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minstack",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
             }
           ]
         },
@@ -90,16 +168,223 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "STRING",
-              "value": "minheap"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minstack"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minstack",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
             },
             {
-              "type": "FIELD",
-              "name": "minheap",
-              "content": {
-                "type": "SYMBOL",
-                "name": "number"
-              }
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "bits"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "bits",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minheap"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minheap",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minstack"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minstack",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minheap"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minheap",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "bits"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "bits",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minheap"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minheap",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "bits"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "bits",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minstack"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minstack",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minheap"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minheap",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "minstack"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "minstack",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "bits"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "bits",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  }
+                }
+              ]
             }
           ]
         }

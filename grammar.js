@@ -37,6 +37,27 @@ const headers = headers_convert({
     minheap: $ => $.number,
 });
 
+// https://stackoverflow.com/a/20871714
+const permutations = (inputArr) => {
+    let result = [];
+
+    const permute = (arr, m = []) => {
+        if (arr.length === 0) {
+            result.push(m)
+        } else {
+            for (let i = 0; i < arr.length; i++) {
+                let curr = arr.slice();
+                let next = curr.splice(i, 1);
+                permute(curr.slice(), m.concat(next))
+            }
+        }
+    }
+
+    permute(inputArr)
+
+    return result;
+}
+
 module.exports = grammar({
     name: "URSL",
     extras: $ => [/\s+/, $.comment],
@@ -47,15 +68,15 @@ module.exports = grammar({
             field("data", repeat($.definition)),
             field("code", repeat(choice($.func, $.inst, $.inst_permutation))),
         ),
-        headers: $ => seq(
-            ...headers.map(h => h($)),
+        headers: $ => choice(
+            ...permutations(headers).map(headers => seq(...headers.map(h => h($)))),
         ),
         // These can really have whatever since they are erased in compilation and do not correspond to emitted labels
         // I allow dots because i like it, and it's useful to represent compiler-generated variations of instructions
         identifier: $ => /([A-Za-z_][\d\.]*)+/,
 
         comment: $ => choice(
-            // these weren't working properly, so i copied the ones from C# grammar.
+            // these weren't working properly, so i copied the ones from C# grammar.1
             // i think they're written this weirdly because of LR parsing limitations
             // (no backtracking ever, so the regex has to make sure it can't consume past the */, or else it'd never ever match and produces error nodes)
             seq("//", /[^\r\n]*/),
