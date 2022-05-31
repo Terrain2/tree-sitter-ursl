@@ -4,14 +4,10 @@
 const IDENT = /([A-Za-z_]\d*)+/;
 const INDEX = /([1-9]0*)+|0/;
 
-const i = (f) => $ => seq(optional(field("label", $.inst_label)), f($));
+const i = f => $ => seq(optional(field("label", $.inst_label)), f($));
+const convert = (map, obj) => Object.fromEntries(Object.entries(obj).map(([key, val]) => [key, map(key, val)]))
 
-const inst_convert = (insts) => Object.fromEntries(Object.entries(insts).map(([opcode, operand]) => [
-    opcode, i($ => operand == null ? opcode : seq(opcode, field("operand", operand($))))
-]));
-const headers_convert = (headers) => Object.entries(headers).map(([header, value]) => $ => seq(header, field(header, value($))));
-
-const instructions = inst_convert({
+const instructions = convert((opcode, operand) => i($ => operand == null ? opcode : seq(opcode, field("operand", operand($)))), {
     height: $ => $.number,
     jump: $ => $.inst_label,
     halt: null,
@@ -31,32 +27,11 @@ const instructions = inst_convert({
     set: $ => $.number,
 });
 
-const headers = headers_convert({
+const headers = convert((header, value) => $ => seq(header, field("value", value($))), {
     bits: $ => $.number,
     minstack: $ => $.number,
     minheap: $ => $.number,
 });
-
-// https://stackoverflow.com/a/20871714
-const permutations = (inputArr) => {
-    let result = [];
-
-    const permute = (arr, m = []) => {
-        if (arr.length === 0) {
-            result.push(m)
-        } else {
-            for (let i = 0; i < arr.length; i++) {
-                let curr = arr.slice();
-                let next = curr.splice(i, 1);
-                permute(curr.slice(), m.concat(next))
-            }
-        }
-    }
-
-    permute(inputArr)
-
-    return result;
-}
 
 module.exports = grammar({
     name: "URSL",
@@ -64,13 +39,14 @@ module.exports = grammar({
 
     rules: {
         source_file: $ => seq(
-            field("headers", $.headers),
+            field("headers", repeat($._header)),
             field("data", repeat($.definition)),
             field("code", repeat(choice($.func, $.inst, $.inst_permutation))),
         ),
-        headers: $ => choice(
-            ...permutations(headers).map(headers => seq(...headers.map(h => h($)))),
+        _header: $ => choice(
+            ...Object.keys(headers).map(key => $[key]),
         ),
+        ...headers,
         // These can really have whatever since they are erased in compilation and do not correspond to emitted labels
         // I allow dots because i like it, and it's useful to represent compiler-generated variations of instructions
         identifier: $ => /([A-Za-z_][\d\.]*)+/,

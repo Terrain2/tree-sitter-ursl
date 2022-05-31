@@ -36,6 +36,22 @@
     }
   },
   {
+    "type": "bits",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "branch",
     "named": true,
     "fields": {
@@ -427,42 +443,6 @@
     }
   },
   {
-    "type": "headers",
-    "named": true,
-    "fields": {
-      "bits": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "number",
-            "named": true
-          }
-        ]
-      },
-      "minheap": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "number",
-            "named": true
-          }
-        ]
-      },
-      "minstack": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "number",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "height",
     "named": true,
     "fields": {
@@ -677,6 +657,38 @@
     }
   },
   {
+    "type": "minheap",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "minstack",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "number",
     "named": true,
     "fields": {}
@@ -860,11 +872,19 @@
         ]
       },
       "headers": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
-            "type": "headers",
+            "type": "bits",
+            "named": true
+          },
+          {
+            "type": "minheap",
+            "named": true
+          },
+          {
+            "type": "minstack",
             "named": true
           }
         ]
