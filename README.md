@@ -1,5 +1,3 @@
-URSL? All will be explained in due time. This is a language i'm working on, and i need this repository with the parser public for now, so that i can include the git repo via npm.
-
 If you don't know what tree-sitter is or how to use it, here's a quick guide to just setting up this repo so you can use it for highlighting or whatever:
 
 -   install tree-sitter: `npm i -g tree-sitter-cli`
