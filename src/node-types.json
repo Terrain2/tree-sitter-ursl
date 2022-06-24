@@ -892,6 +892,10 @@
         "required": true,
         "types": [
           {
+            "type": "input_register",
+            "named": true
+          },
+          {
             "type": "inst_label",
             "named": true
           },
@@ -963,6 +967,10 @@
         "multiple": false,
         "required": true,
         "types": [
+          {
+            "type": "input_register",
+            "named": true
+          },
           {
             "type": "register",
             "named": true

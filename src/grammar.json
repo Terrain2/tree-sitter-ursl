@@ -1378,7 +1378,7 @@
         ]
       }
     },
-    "_urcl_value": {
+    "_reg": {
       "type": "CHOICE",
       "members": [
         {
@@ -1388,6 +1388,15 @@
         {
           "type": "SYMBOL",
           "name": "input_register"
+        }
+      ]
+    },
+    "_urcl_value": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_reg"
         },
         {
           "type": "SYMBOL",
@@ -1441,7 +1450,7 @@
           "name": "dest",
           "content": {
             "type": "SYMBOL",
-            "name": "register"
+            "name": "_reg"
           }
         },
         {
@@ -1498,7 +1507,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "register"
+                "name": "_reg"
               },
               {
                 "type": "SYMBOL",

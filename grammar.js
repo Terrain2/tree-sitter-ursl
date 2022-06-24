@@ -166,8 +166,9 @@ module.exports = grammar({
 
         register: $ => token(seq("$", INDEX)),
         input_register: $ => token(seq("&", INDEX)),
+        _reg: $ => choice($.register, $.input_register),
 
-        _urcl_value: $ => choice($.register, $.input_register, $._literal),
+        _urcl_value: $ => choice($._reg, $._literal),
         urcl_end_label: $ => ":$",
         _urcl_label: $ => choice($.inst_label, $.urcl_end_label),
 
@@ -178,7 +179,7 @@ module.exports = grammar({
 
         urcl_in: $ => seq(
             "IN",
-            field("dest", $.register),
+            field("dest", $._reg),
             field("source", $.port),
         ),
 
@@ -190,7 +191,7 @@ module.exports = grammar({
 
         urcl_generic: $ => seq(
             field("op", $.identifier), // no validation is performed on URCL instruction names so allowing extra stuff (.) in the grammar is not an issue
-            field("dest", choice($.register, $._urcl_label)),
+            field("dest", choice($._reg, $._urcl_label)),
             field("source", choice(
                 $._urcl_value,
                 seq($._urcl_value, $._urcl_value),
