@@ -92,23 +92,11 @@
     "named": true,
     "fields": {
       "instructions": {
-        "multiple": true,
-        "required": false,
+        "multiple": false,
+        "required": true,
         "types": [
           {
-            "type": "jmp",
-            "named": true
-          },
-          {
-            "type": "urcl_in",
-            "named": true
-          },
-          {
-            "type": "urcl_instruction",
-            "named": true
-          },
-          {
-            "type": "urcl_out",
+            "type": "urcl_instructions",
             "named": true
           }
         ]
@@ -535,23 +523,11 @@
         ]
       },
       "instructions": {
-        "multiple": true,
-        "required": false,
+        "multiple": false,
+        "required": true,
         "types": [
           {
-            "type": "jmp",
-            "named": true
-          },
-          {
-            "type": "urcl_in",
-            "named": true
-          },
-          {
-            "type": "urcl_instruction",
-            "named": true
-          },
-          {
-            "type": "urcl_out",
+            "type": "urcl_instructions",
             "named": true
           }
         ]
@@ -568,7 +544,7 @@
       },
       "stack": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "stack_behaviour",
@@ -598,32 +574,6 @@
         "types": [
           {
             "type": "permutation",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "jmp",
-    "named": true,
-    "fields": {
-      "dest": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
             "named": true
           }
         ]
@@ -934,43 +884,7 @@
     }
   },
   {
-    "type": "urcl_in",
-    "named": true,
-    "fields": {
-      "dest": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "register",
-            "named": true
-          }
-        ]
-      },
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "source": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "port",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "urcl_instruction",
+    "type": "urcl_generic",
     "named": true,
     "fields": {
       "dest": {
@@ -984,15 +898,9 @@
           {
             "type": "register",
             "named": true
-          }
-        ]
-      },
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
+          },
           {
-            "type": "inst_label",
+            "type": "urcl_end_label",
             "named": true
           }
         ]
@@ -1024,6 +932,10 @@
             "named": true
           },
           {
+            "type": "input_register",
+            "named": true
+          },
+          {
             "type": "macro",
             "named": true
           },
@@ -1044,6 +956,106 @@
     }
   },
   {
+    "type": "urcl_in",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "register",
+            "named": true
+          }
+        ]
+      },
+      "source": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "port",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "urcl_instruction",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "urcl_generic",
+          "named": true
+        },
+        {
+          "type": "urcl_in",
+          "named": true
+        },
+        {
+          "type": "urcl_jmp",
+          "named": true
+        },
+        {
+          "type": "urcl_out",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "urcl_instructions",
+    "named": true,
+    "fields": {
+      "instruction": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "urcl_instruction",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "urcl_jmp",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          },
+          {
+            "type": "urcl_end_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "urcl_out",
     "named": true,
     "fields": {
@@ -1053,16 +1065,6 @@
         "types": [
           {
             "type": "port",
-            "named": true
-          }
-        ]
-      },
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
             "named": true
           }
         ]
@@ -1084,6 +1086,10 @@
             "named": true
           },
           {
+            "type": "input_register",
+            "named": true
+          },
+          {
             "type": "macro",
             "named": true
           },
@@ -1102,6 +1108,10 @@
         ]
       }
     }
+  },
+  {
+    "type": "\n",
+    "named": false
   },
   {
     "type": "'",
@@ -1208,6 +1218,10 @@
     "named": false
   },
   {
+    "type": "input_register",
+    "named": true
+  },
+  {
     "type": "inst",
     "named": false
   },
@@ -1262,6 +1276,10 @@
   {
     "type": "set",
     "named": false
+  },
+  {
+    "type": "urcl_end_label",
+    "named": true
   },
   {
     "type": "{",

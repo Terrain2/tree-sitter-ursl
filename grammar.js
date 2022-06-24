@@ -111,10 +111,8 @@ module.exports = grammar({
         inst: $ => seq(
             "inst",
             field("name", $.identifier),
-            optional(field("stack", $.stack_behaviour)),
-            "{",
-            field("instructions", repeat($._urcl_instruction)),
-            "}",
+            field("stack", $.stack_behaviour),
+            field("instructions", $.urcl_instructions),
             optional(field("branch", $.branch_block))
         ),
         inst_permutation: $ => seq(
@@ -135,9 +133,7 @@ module.exports = grammar({
         branch_block: $ => seq(
             "branch",
             field("label", $.inst_label),
-            "{",
-            field("instructions", repeat($._urcl_instruction)),
-            "}",
+            field("instructions", $.urcl_instructions),
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
@@ -145,55 +141,59 @@ module.exports = grammar({
             $.custom_instruction
         ),
 
+        urcl_instructions: $ => seq(
+            "{",
+            field("instruction", $.urcl_instruction),
+            // the optional() is required here, because no backtracking, so the \n will consume newline and cause error otherwise
+            repeat(seq("\n", optional(field("instruction", $.urcl_instruction)))),
+            "}"
+        ),
+
         ...instructions,
 
         branch: i($ => seq(field("opcode", $.identifier), "branch", field("operand", $.inst_label))),
         custom_instruction: i($ => seq(field("opcode", $.identifier))),
 
-        _urcl_instruction: $ => choice(
-            $.jmp,
-            $.urcl_in,
-            $.urcl_out,
-            $.urcl_instruction,
+        urcl_instruction: $ => seq(
+            repeat(field("label", $.inst_label)),
+            choice(
+                $.urcl_jmp,
+                $.urcl_in,
+                $.urcl_out,
+                $.urcl_generic,
+            ),
         ),
 
         register: $ => token(seq("$", INDEX)),
+        input_register: $ => token(seq("&", INDEX)),
 
-        _value: $ => choice($.register, $._literal),
+        _urcl_value: $ => choice($.register, $.input_register, $._literal),
+        urcl_end_label: $ => ":$",
+        _urcl_label: $ => choice($.inst_label, $.urcl_end_label),
 
-        unary_source: $ => $.register,
-        binary_source: $ => seq(
-            field("src1", $.register),
-            field("src2", $.register),
-        ),
-
-        jmp: $ => seq(
-            optional(field("label", $.inst_label)),
+        urcl_jmp: $ => seq(
             "JMP",
-            field("dest", $.inst_label),
+            field("dest", $._urcl_label),
         ),
 
         urcl_in: $ => seq(
-            optional(field("label", $.inst_label)),
             "IN",
             field("dest", $.register),
             field("source", $.port),
         ),
 
         urcl_out: $ => seq(
-            optional(field("label", $.inst_label)),
             "OUT",
             field("dest", $.port),
-            field("source", $._value),
+            field("source", $._urcl_value),
         ),
 
-        urcl_instruction: $ => seq(
-            optional(field("label", $.inst_label)),
+        urcl_generic: $ => seq(
             field("op", $.identifier), // no validation is performed on URCL instruction names so allowing extra stuff (.) in the grammar is not an issue
-            field("dest", choice($.register, $.inst_label)),
+            field("dest", choice($.register, $._urcl_label)),
             field("source", choice(
-                $._value,
-                seq($._value, $._value),
+                $._urcl_value,
+                seq($._urcl_value, $._urcl_value),
             )),
         ),
     },

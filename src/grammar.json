@@ -515,39 +515,20 @@
           }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "stack",
-              "content": {
-                "type": "SYMBOL",
-                "name": "stack_behaviour"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "{"
+          "type": "FIELD",
+          "name": "stack",
+          "content": {
+            "type": "SYMBOL",
+            "name": "stack_behaviour"
+          }
         },
         {
           "type": "FIELD",
           "name": "instructions",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_urcl_instruction"
-            }
+            "type": "SYMBOL",
+            "name": "urcl_instructions"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
         },
         {
           "type": "CHOICE",
@@ -657,23 +638,12 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
           "type": "FIELD",
           "name": "instructions",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_urcl_instruction"
-            }
+            "type": "SYMBOL",
+            "name": "urcl_instructions"
           }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
         }
       ]
     },
@@ -739,6 +709,55 @@
         {
           "type": "SYMBOL",
           "name": "custom_instruction"
+        }
+      ]
+    },
+    "urcl_instructions": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "FIELD",
+          "name": "instruction",
+          "content": {
+            "type": "SYMBOL",
+            "name": "urcl_instruction"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "\n"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "FIELD",
+                    "name": "instruction",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "urcl_instruction"
+                    }
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },
@@ -1290,24 +1309,40 @@
         }
       ]
     },
-    "_urcl_instruction": {
-      "type": "CHOICE",
+    "urcl_instruction": {
+      "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "jmp"
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "label",
+            "content": {
+              "type": "SYMBOL",
+              "name": "inst_label"
+            }
+          }
         },
         {
-          "type": "SYMBOL",
-          "name": "urcl_in"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "urcl_out"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "urcl_instruction"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "urcl_jmp"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "urcl_in"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "urcl_out"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "urcl_generic"
+            }
+          ]
         }
       ]
     },
@@ -1327,7 +1362,23 @@
         ]
       }
     },
-    "_value": {
+    "input_register": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "&"
+          },
+          {
+            "type": "PATTERN",
+            "value": "([1-9]0*)+|0"
+          }
+        ]
+      }
+    },
+    "_urcl_value": {
       "type": "CHOICE",
       "members": [
         {
@@ -1336,54 +1387,34 @@
         },
         {
           "type": "SYMBOL",
+          "name": "input_register"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_literal"
         }
       ]
     },
-    "unary_source": {
-      "type": "SYMBOL",
-      "name": "register"
+    "urcl_end_label": {
+      "type": "STRING",
+      "value": ":$"
     },
-    "binary_source": {
-      "type": "SEQ",
+    "_urcl_label": {
+      "type": "CHOICE",
       "members": [
         {
-          "type": "FIELD",
-          "name": "src1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "register"
-          }
+          "type": "SYMBOL",
+          "name": "inst_label"
         },
         {
-          "type": "FIELD",
-          "name": "src2",
-          "content": {
-            "type": "SYMBOL",
-            "name": "register"
-          }
+          "type": "SYMBOL",
+          "name": "urcl_end_label"
         }
       ]
     },
-    "jmp": {
+    "urcl_jmp": {
       "type": "SEQ",
       "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "label",
-              "content": {
-                "type": "SYMBOL",
-                "name": "inst_label"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
         {
           "type": "STRING",
           "value": "JMP"
@@ -1393,7 +1424,7 @@
           "name": "dest",
           "content": {
             "type": "SYMBOL",
-            "name": "inst_label"
+            "name": "_urcl_label"
           }
         }
       ]
@@ -1401,22 +1432,6 @@
     "urcl_in": {
       "type": "SEQ",
       "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "label",
-              "content": {
-                "type": "SYMBOL",
-                "name": "inst_label"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
         {
           "type": "STRING",
           "value": "IN"
@@ -1443,22 +1458,6 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "label",
-              "content": {
-                "type": "SYMBOL",
-                "name": "inst_label"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
           "type": "STRING",
           "value": "OUT"
         },
@@ -1475,30 +1474,14 @@
           "name": "source",
           "content": {
             "type": "SYMBOL",
-            "name": "_value"
+            "name": "_urcl_value"
           }
         }
       ]
     },
-    "urcl_instruction": {
+    "urcl_generic": {
       "type": "SEQ",
       "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "label",
-              "content": {
-                "type": "SYMBOL",
-                "name": "inst_label"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
         {
           "type": "FIELD",
           "name": "op",
@@ -1519,7 +1502,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "inst_label"
+                "name": "_urcl_label"
               }
             ]
           }
@@ -1532,18 +1515,18 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_value"
+                "name": "_urcl_value"
               },
               {
                 "type": "SEQ",
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "_value"
+                    "name": "_urcl_value"
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "_value"
+                    "name": "_urcl_value"
                   }
                 ]
               }

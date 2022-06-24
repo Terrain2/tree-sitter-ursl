@@ -69,7 +69,15 @@ inst example 1 -> 1 {
 inst equal 2 -> 1 {
     SETE $1 $1 $2
 } branch :dest {
-    BRE :dest $1 $2
+    BRE :dest &1 &2
+}
+
+inst mult 2 -> 1 {
+    :start
+    BNZ :$ $3
+    ADD $1 $1 $2
+    DEC $3 $3
+    JMP :start
 }
 
 func $bindings {
