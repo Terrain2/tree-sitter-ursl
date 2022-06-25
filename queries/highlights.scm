@@ -1,12 +1,13 @@
 (comment) @comment
 (number) @number
 (port) @port
-(inst_label) @label
+[(inst_label) (urcl_end_label)] @label
 (data_label) @label.data
 (function_name) @function
 (macro) @macro
 (mem) @address
 (register) @register
+(input_register) @register.special
 
 "'" @string
 (char) @string
@@ -14,7 +15,7 @@
 
 (branch opcode: (identifier) @instruction)
 (custom_instruction opcode: (identifier) @instruction)
-(urcl_instruction op: (identifier) @instruction)
+(urcl_generic op: (identifier) @instruction)
 
 (inst name: (identifier) @instruction)
 (inst_permutation name: (identifier) @instruction)
