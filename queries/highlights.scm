@@ -1,7 +1,7 @@
 (comment) @comment
 (number) @number
 (port) @port
-[(inst_label) (urcl_end_label)] @label
+[(inst_label) (end_label)] @label
 (data_label) @label.data
 (function_name) @function
 (macro) @macro

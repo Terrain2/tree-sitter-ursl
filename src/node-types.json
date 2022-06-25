@@ -599,6 +599,10 @@
         "required": true,
         "types": [
           {
+            "type": "end_label",
+            "named": true
+          },
+          {
             "type": "inst_label",
             "named": true
           }
@@ -892,6 +896,10 @@
         "required": true,
         "types": [
           {
+            "type": "end_label",
+            "named": true
+          },
+          {
             "type": "input_register",
             "named": true
           },
@@ -901,10 +909,6 @@
           },
           {
             "type": "register",
-            "named": true
-          },
-          {
-            "type": "urcl_end_label",
             "named": true
           }
         ]
@@ -993,6 +997,28 @@
     "type": "urcl_instruction",
     "named": true,
     "fields": {
+      "instruction": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "urcl_generic",
+            "named": true
+          },
+          {
+            "type": "urcl_in",
+            "named": true
+          },
+          {
+            "type": "urcl_jmp",
+            "named": true
+          },
+          {
+            "type": "urcl_out",
+            "named": true
+          }
+        ]
+      },
       "label": {
         "multiple": true,
         "required": false,
@@ -1003,28 +1029,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "urcl_generic",
-          "named": true
-        },
-        {
-          "type": "urcl_in",
-          "named": true
-        },
-        {
-          "type": "urcl_jmp",
-          "named": true
-        },
-        {
-          "type": "urcl_out",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1052,11 +1056,11 @@
         "required": true,
         "types": [
           {
-            "type": "inst_label",
+            "type": "end_label",
             "named": true
           },
           {
-            "type": "urcl_end_label",
+            "type": "inst_label",
             "named": true
           }
         ]
@@ -1194,6 +1198,10 @@
     "named": true
   },
   {
+    "type": "end_label",
+    "named": true
+  },
+  {
     "type": "func",
     "named": false
   },
@@ -1284,10 +1292,6 @@
   {
     "type": "set",
     "named": false
-  },
-  {
-    "type": "urcl_end_label",
-    "named": true
   },
   {
     "type": "{",

@@ -9,7 +9,7 @@ const convert = (map, obj) => Object.fromEntries(Object.entries(obj).map(([key, 
 
 const instructions = convert((opcode, operand) => i($ => operand == null ? opcode : seq(opcode, field("operand", operand($)))), {
     height: $ => $.number,
-    jump: $ => $.inst_label,
+    jump: $ => $._any_inst_label,
     halt: null,
 
     perm: $ => $.permutation,
@@ -85,6 +85,8 @@ module.exports = grammar({
         port: $ => token(seq("%", IDENT)),
 
         inst_label: $ => token(seq(":", IDENT)),
+        end_label: $ => ":$",
+        _any_inst_label: $ => choice($.inst_label, $.end_label),
         data_label: $ => token(seq(".", IDENT)),
         definition: $ => seq(
             field("label", $.data_label),
@@ -156,12 +158,12 @@ module.exports = grammar({
 
         urcl_instruction: $ => seq(
             repeat(field("label", $.inst_label)),
-            choice(
+            field("instruction", choice(
                 $.urcl_jmp,
                 $.urcl_in,
                 $.urcl_out,
                 $.urcl_generic,
-            ),
+            )),
         ),
 
         register: $ => token(seq("$", INDEX)),
@@ -169,12 +171,10 @@ module.exports = grammar({
         _reg: $ => choice($.register, $.input_register),
 
         _urcl_value: $ => choice($._reg, $._literal),
-        urcl_end_label: $ => ":$",
-        _urcl_label: $ => choice($.inst_label, $.urcl_end_label),
 
         urcl_jmp: $ => seq(
             "JMP",
-            field("dest", $._urcl_label),
+            field("dest", $._any_inst_label),
         ),
 
         urcl_in: $ => seq(
@@ -191,7 +191,7 @@ module.exports = grammar({
 
         urcl_generic: $ => seq(
             field("op", $.identifier), // no validation is performed on URCL instruction names so allowing extra stuff (.) in the grammar is not an issue
-            field("dest", choice($._reg, $._urcl_label)),
+            field("dest", choice($._reg, $._any_inst_label)),
             field("source", choice(
                 $._urcl_value,
                 seq($._urcl_value, $._urcl_value),

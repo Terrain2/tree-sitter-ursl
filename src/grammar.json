@@ -351,6 +351,23 @@
         ]
       }
     },
+    "end_label": {
+      "type": "STRING",
+      "value": ":$"
+    },
+    "_any_inst_label": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "inst_label"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_label"
+        }
+      ]
+    },
     "data_label": {
       "type": "TOKEN",
       "content": {
@@ -830,7 +847,7 @@
               "name": "operand",
               "content": {
                 "type": "SYMBOL",
-                "name": "inst_label"
+                "name": "_any_inst_label"
               }
             }
           ]
@@ -1324,25 +1341,29 @@
           }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "urcl_jmp"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "urcl_in"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "urcl_out"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "urcl_generic"
-            }
-          ]
+          "type": "FIELD",
+          "name": "instruction",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "urcl_jmp"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "urcl_in"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "urcl_out"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "urcl_generic"
+              }
+            ]
+          }
         }
       ]
     },
@@ -1404,23 +1425,6 @@
         }
       ]
     },
-    "urcl_end_label": {
-      "type": "STRING",
-      "value": ":$"
-    },
-    "_urcl_label": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "inst_label"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "urcl_end_label"
-        }
-      ]
-    },
     "urcl_jmp": {
       "type": "SEQ",
       "members": [
@@ -1433,7 +1437,7 @@
           "name": "dest",
           "content": {
             "type": "SYMBOL",
-            "name": "_urcl_label"
+            "name": "_any_inst_label"
           }
         }
       ]
@@ -1511,7 +1515,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "_urcl_label"
+                "name": "_any_inst_label"
               }
             ]
           }
