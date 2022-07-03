@@ -47,12 +47,12 @@ func $fib 1 -> 1 {
     ret
 
     height 0
-    :base_case
+    label :base_case
     get 0
     ret
 }
 
-inst example 1 -> 1 {
+inst example (<X>) -> ($0) {
     :a IMM $0 #0
     :a JMP :a
 

@@ -26,7 +26,7 @@
     "+"
 ] @punctuation.delimiter
 [
-    "[" "]" ; data arrays
+    "[" "]" ; data arrays, permutations
     "{" "}" ; instruction lists
 ] @punctuation.bracket
 
@@ -39,22 +39,22 @@
     "func"
 ] @keyword
 
-[ ; core language instructions
-    "perm"
-    "const"
+[ ; intrinsics
     "height"
+    "const"
+    "perm"
+    "halt"
 
     "in"
     "out"
 
+    "label"
     "jump"
     "branch"
 
-    "halt"
-
+    "ret"
     "call"
     "icall"
-    "ret"
 
     "ref"
     "get"

@@ -1,26 +1,21 @@
-// keyword extraction was not working well with instruction_name, so i just removed it. URSL compilation isn't that performance sensitive anyways
-// These are at the top because they're reused as terminal symbols
-// \d shouldn't be allowed as the first char to disambiguate .0 from labels and fixed/floating point in the future (if that is ever added to URCL, URSL will have equivalents)
-const IDENT = /([A-Za-z_]\d*)+/;
-const INDEX = /([1-9]0*)+|0/;
-
-const i = f => $ => seq(optional(field("label", $.inst_label)), f($));
 const convert = (map, obj) => Object.fromEntries(Object.entries(obj).map(([key, val]) => [key, map(key, val)]))
 
-const instructions = convert((opcode, operand) => i($ => operand == null ? opcode : seq(opcode, field("operand", operand($)))), {
+const instructions = convert((opcode, operand) => $ => operand == null ? opcode : seq(opcode, field("operand", operand($))), {
     height: $ => $.number,
-    jump: $ => $._any_inst_label,
-    halt: null,
-
-    perm: $ => $.permutation,
     const: $ => $._literal,
+    perm: $ => $.permutation,
+    halt: null,
 
     in: $ => $.port,
     out: $ => $.port,
 
+    label: $ => $.inst_label,
+    jump: $ => $.inst_label,
+    branch: $ => $.inst_label,
+
+    ret: null,
     call: $ => $.function_name,
     icall: $ => $.stack_behaviour,
-    ret: null,
 
     ref: $ => $.number,
     get: $ => $.number,
@@ -49,7 +44,10 @@ module.exports = grammar({
         ...headers,
         // These can really have whatever since they are erased in compilation and do not correspond to emitted labels
         // I allow dots because i like it, and it's useful to represent compiler-generated variations of instructions
+        // \d shouldn't be allowed as the first char to disambiguate .0 from labels and fixed/floating point in the future (if that is ever added to URCL, URSL will have equivalents)
         identifier: $ => /([A-Za-z_][\d\.]*)+/,
+        imm_ident: $ => token.immediate(/([A-Za-z_][\d\.]*)+/),
+        index: $ => token.immediate(/[1-9]0*/),
 
         comment: $ => choice(
             // these weren't working properly, so i copied the ones from C# grammar.1
@@ -60,7 +58,7 @@ module.exports = grammar({
         ),
 
         // Cannot start with a digit like if it had \w+, because it would be ambiguous with regs for URCL blocks (how did tree-sitter not catch that?)
-        function_name: $ => token(seq("$", IDENT)),
+        function_name: $ => seq("$", field("name", alias($.imm_ident, $.identifier))),
 
         array: $ => seq("[", field("items", repeat($._literal)), "]"),
         _literal: $ => choice($.number, $.char_literal, $.macro, $.mem, $.data_label, $.function_name),
@@ -80,14 +78,14 @@ module.exports = grammar({
         char: $ => /[^\\'\r\n]/,
         char_escape: $ => /\\['\\nrt0]/,
 
-        macro: $ => token(seq("@", IDENT)),
-        mem: $ => token(seq("#", INDEX)),
-        port: $ => token(seq("%", IDENT)),
+        macro: $ => seq("@", field("name", alias($.imm_ident, $.identifier))),
+        mem: $ => seq("#", field("addr", $.index)),
+        port: $ => seq("%", field("name", alias($.imm_ident, $.identifier))),
 
-        inst_label: $ => token(seq(":", IDENT)),
+        inst_label: $ => seq(":", field("name", alias($.imm_ident, $.identifier))),
         end_label: $ => ":$",
         _any_inst_label: $ => choice($.inst_label, $.end_label),
-        data_label: $ => token(seq(".", IDENT)),
+        data_label: $ => seq(".", field("name", alias($.imm_ident, $.identifier))),
         definition: $ => seq(
             field("label", $.data_label),
             field("value", choice($._literal, $.array)),
@@ -113,7 +111,11 @@ module.exports = grammar({
         inst: $ => seq(
             "inst",
             field("name", $.identifier),
-            field("stack", $.stack_behaviour),
+            repeat(field("input", $._reg)),
+            optional(seq(
+                "->",
+                repeat(field("output", $._reg)),
+            )),
             field("instructions", $.urcl_instructions),
             optional(field("branch", $.branch_block))
         ),
@@ -134,6 +136,8 @@ module.exports = grammar({
         ),
         branch_block: $ => seq(
             "branch",
+            repeat(field("input", $._reg)),
+            "->",
             field("label", $.inst_label),
             field("instructions", $.urcl_instructions),
         ),
@@ -145,16 +149,15 @@ module.exports = grammar({
 
         urcl_instructions: $ => seq(
             "{",
-            field("instruction", $.urcl_instruction),
+            repeat(field("instruction", $.urcl_instruction)),
             // the optional() is required here, because no backtracking, so the \n will consume newline and cause error otherwise
-            repeat(seq("\n", optional(field("instruction", $.urcl_instruction)))),
+            // repeat(seq("\n", optional(field("instruction", $.urcl_instruction)))),
             "}"
         ),
 
         ...instructions,
 
-        branch: i($ => seq(field("opcode", $.identifier), "branch", field("operand", $.inst_label))),
-        custom_instruction: i($ => seq(field("opcode", $.identifier))),
+        custom_instruction: $ => seq(field("opcode", $.identifier)),
 
         urcl_instruction: $ => seq(
             repeat(field("label", $.inst_label)),
@@ -166,9 +169,10 @@ module.exports = grammar({
             )),
         ),
 
-        register: $ => token(seq("$", INDEX)),
-        input_register: $ => token(seq("&", INDEX)),
-        _reg: $ => choice($.register, $.input_register),
+        index_register: $ => seq("$", field("index", $.index)),
+        named_register: $ => seq("&", field("name", alias($.imm_ident, $.identifier))),
+        input_register: $ => seq("<", field("name", alias($.imm_ident, $.identifier), token.immediate(">"))),
+        _reg: $ => choice($.index_register, $.named_register, $.input_register),
 
         _urcl_value: $ => choice($._reg, $._literal),
 
@@ -192,10 +196,7 @@ module.exports = grammar({
         urcl_generic: $ => seq(
             field("op", $.identifier), // no validation is performed on URCL instruction names so allowing extra stuff (.) in the grammar is not an issue
             field("dest", choice($._reg, $._any_inst_label)),
-            field("source", choice(
-                $._urcl_value,
-                seq($._urcl_value, $._urcl_value),
-            )),
+            repeat1(field("source", $._urcl_value)),
         ),
     },
 })

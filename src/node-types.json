@@ -55,26 +55,6 @@
     "type": "branch",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "opcode": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -117,16 +97,6 @@
     "type": "call",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -168,16 +138,6 @@
     "type": "const",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -214,17 +174,23 @@
     "type": "custom_instruction",
     "named": true,
     "fields": {
-      "label": {
+      "opcode": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "inst_label",
+            "type": "identifier",
             "named": true
           }
         ]
-      },
-      "opcode": {
+      }
+    }
+  },
+  {
+    "type": "data_label",
+    "named": true,
+    "fields": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -335,6 +301,10 @@
             "named": true
           },
           {
+            "type": "label",
+            "named": true
+          },
+          {
             "type": "out",
             "named": true
           },
@@ -389,19 +359,25 @@
     }
   },
   {
-    "type": "get",
+    "type": "function_name",
     "named": true,
     "fields": {
-      "label": {
+      "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "inst_label",
+            "type": "identifier",
             "named": true
           }
         ]
-      },
+      }
+    }
+  },
+  {
+    "type": "get",
+    "named": true,
+    "fields": {
       "operand": {
         "multiple": false,
         "required": true,
@@ -415,35 +391,9 @@
     }
   },
   {
-    "type": "halt",
-    "named": true,
-    "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "height",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -460,16 +410,6 @@
     "type": "icall",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -486,22 +426,44 @@
     "type": "in",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "port",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "index_register",
+    "named": true,
+    "fields": {
+      "index": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "index",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "input_register",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -518,6 +480,24 @@
         "types": [
           {
             "type": "branch_block",
+            "named": true
+          }
+        ]
+      },
+      "input": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "index_register",
+            "named": true
+          },
+          {
+            "type": "input_register",
+            "named": true
+          },
+          {
+            "type": "named_register",
             "named": true
           }
         ]
@@ -542,12 +522,36 @@
           }
         ]
       },
-      "stack": {
+      "output": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "index_register",
+            "named": true
+          },
+          {
+            "type": "input_register",
+            "named": true
+          },
+          {
+            "type": "named_register",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "inst_label",
+    "named": true,
+    "fields": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "stack_behaviour",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -584,26 +588,60 @@
     "type": "jump",
     "named": true,
     "fields": {
-      "label": {
+      "operand": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "inst_label",
             "named": true
           }
         ]
-      },
+      }
+    }
+  },
+  {
+    "type": "label",
+    "named": true,
+    "fields": {
       "operand": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "end_label",
-            "named": true
-          },
-          {
             "type": "inst_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "macro",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "mem",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -643,6 +681,22 @@
     }
   },
   {
+    "type": "named_register",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "number",
     "named": true,
     "fields": {}
@@ -651,16 +705,6 @@
     "type": "out",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -677,16 +721,6 @@
     "type": "perm",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -726,19 +760,25 @@
     }
   },
   {
-    "type": "ref",
+    "type": "port",
     "named": true,
     "fields": {
-      "label": {
+      "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
-            "type": "inst_label",
+            "type": "identifier",
             "named": true
           }
         ]
-      },
+      }
+    }
+  },
+  {
+    "type": "ref",
+    "named": true,
+    "fields": {
       "operand": {
         "multiple": false,
         "required": true,
@@ -752,35 +792,9 @@
     }
   },
   {
-    "type": "ret",
-    "named": true,
-    "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "set",
     "named": true,
     "fields": {
-      "label": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
       "operand": {
         "multiple": false,
         "required": true,
@@ -900,6 +914,10 @@
             "named": true
           },
           {
+            "type": "index_register",
+            "named": true
+          },
+          {
             "type": "input_register",
             "named": true
           },
@@ -908,7 +926,7 @@
             "named": true
           },
           {
-            "type": "register",
+            "type": "named_register",
             "named": true
           }
         ]
@@ -940,6 +958,10 @@
             "named": true
           },
           {
+            "type": "index_register",
+            "named": true
+          },
+          {
             "type": "input_register",
             "named": true
           },
@@ -952,11 +974,11 @@
             "named": true
           },
           {
-            "type": "number",
+            "type": "named_register",
             "named": true
           },
           {
-            "type": "register",
+            "type": "number",
             "named": true
           }
         ]
@@ -972,11 +994,15 @@
         "required": true,
         "types": [
           {
+            "type": "index_register",
+            "named": true
+          },
+          {
             "type": "input_register",
             "named": true
           },
           {
-            "type": "register",
+            "type": "named_register",
             "named": true
           }
         ]
@@ -1037,7 +1063,7 @@
     "fields": {
       "instruction": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "urcl_instruction",
@@ -1098,6 +1124,10 @@
             "named": true
           },
           {
+            "type": "index_register",
+            "named": true
+          },
+          {
             "type": "input_register",
             "named": true
           },
@@ -1110,11 +1140,11 @@
             "named": true
           },
           {
-            "type": "number",
+            "type": "named_register",
             "named": true
           },
           {
-            "type": "register",
+            "type": "number",
             "named": true
           }
         ]
@@ -1122,7 +1152,19 @@
     }
   },
   {
-    "type": "\n",
+    "type": "#",
+    "named": false
+  },
+  {
+    "type": "$",
+    "named": false
+  },
+  {
+    "type": "%",
+    "named": false
+  },
+  {
+    "type": "&",
     "named": false
   },
   {
@@ -1138,6 +1180,10 @@
     "named": false
   },
   {
+    "type": ".",
+    "named": false
+  },
+  {
     "type": "/",
     "named": false
   },
@@ -1147,6 +1193,18 @@
   },
   {
     "type": "//",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "@",
     "named": false
   },
   {
@@ -1194,10 +1252,6 @@
     "named": false
   },
   {
-    "type": "data_label",
-    "named": true
-  },
-  {
     "type": "end_label",
     "named": true
   },
@@ -1206,16 +1260,12 @@
     "named": false
   },
   {
-    "type": "function_name",
-    "named": true
-  },
-  {
     "type": "get",
     "named": false
   },
   {
     "type": "halt",
-    "named": false
+    "named": true
   },
   {
     "type": "height",
@@ -1234,7 +1284,7 @@
     "named": false
   },
   {
-    "type": "input_register",
+    "type": "index",
     "named": true
   },
   {
@@ -1242,20 +1292,12 @@
     "named": false
   },
   {
-    "type": "inst_label",
-    "named": true
-  },
-  {
     "type": "jump",
     "named": false
   },
   {
-    "type": "macro",
-    "named": true
-  },
-  {
-    "type": "mem",
-    "named": true
+    "type": "label",
+    "named": false
   },
   {
     "type": "minheap",
@@ -1274,20 +1316,12 @@
     "named": false
   },
   {
-    "type": "port",
-    "named": true
-  },
-  {
     "type": "ref",
     "named": false
   },
   {
-    "type": "register",
-    "named": true
-  },
-  {
     "type": "ret",
-    "named": false
+    "named": true
   },
   {
     "type": "set",
