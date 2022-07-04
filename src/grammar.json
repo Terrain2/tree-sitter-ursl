@@ -184,13 +184,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "imm_ident"
           }
         }
       ]
@@ -318,13 +313,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "imm_ident"
           }
         }
       ]
@@ -338,15 +328,10 @@
         },
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "addr",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "index"
           }
         }
       ]
@@ -362,13 +347,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "imm_ident"
           }
         }
       ]
@@ -384,13 +364,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "imm_ident"
           }
         }
       ]
@@ -423,13 +398,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "imm_ident"
           }
         }
       ]
@@ -726,6 +696,21 @@
         {
           "type": "STRING",
           "value": "branch"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "input",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_reg"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "->"
         },
         {
           "type": "FIELD",
@@ -1153,13 +1138,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "imm_ident"
           }
         }
       ]
@@ -1175,14 +1155,13 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "imm_ident"
-            },
-            "named": true,
-            "value": "identifier"
+            "type": "SYMBOL",
+            "name": "imm_ident"
           }
+        },
+        {
+          "type": "STRING",
+          "value": ">"
         }
       ]
     },

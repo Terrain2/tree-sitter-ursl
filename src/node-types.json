@@ -71,6 +71,24 @@
     "type": "branch_block",
     "named": true,
     "fields": {
+      "input": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "index_register",
+            "named": true
+          },
+          {
+            "type": "input_register",
+            "named": true
+          },
+          {
+            "type": "named_register",
+            "named": true
+          }
+        ]
+      },
       "instructions": {
         "multiple": false,
         "required": true,
@@ -195,7 +213,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "imm_ident",
             "named": true
           }
         ]
@@ -367,7 +385,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "imm_ident",
             "named": true
           }
         ]
@@ -463,7 +481,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "imm_ident",
             "named": true
           }
         ]
@@ -551,7 +569,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "imm_ident",
             "named": true
           }
         ]
@@ -625,7 +643,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "imm_ident",
             "named": true
           }
         ]
@@ -636,12 +654,12 @@
     "type": "mem",
     "named": true,
     "fields": {
-      "name": {
+      "addr": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "index",
             "named": true
           }
         ]
@@ -689,7 +707,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "imm_ident",
             "named": true
           }
         ]
@@ -768,7 +786,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "imm_ident",
             "named": true
           }
         ]
@@ -1204,6 +1222,10 @@
     "named": false
   },
   {
+    "type": ">",
+    "named": false
+  },
+  {
     "type": "@",
     "named": false
   },
@@ -1277,6 +1299,10 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "imm_ident",
     "named": true
   },
   {

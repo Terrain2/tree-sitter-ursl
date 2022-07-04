@@ -52,7 +52,7 @@ func $fib 1 -> 1 {
     ret
 }
 
-inst example (<X>) -> ($0) {
+inst example <X> -> $0 {
     :a IMM $0 #0
     :a JMP :a
 
@@ -66,7 +66,7 @@ inst example (<X>) -> ($0) {
     OUT %NUMB $1
 }
 
-inst equal 2 -> 1 {
+inst equal <A> -> <A> {
     SETE $1 $1 $2
 } branch :dest {
     BRE :dest &1 &2

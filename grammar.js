@@ -58,7 +58,7 @@ module.exports = grammar({
         ),
 
         // Cannot start with a digit like if it had \w+, because it would be ambiguous with regs for URCL blocks (how did tree-sitter not catch that?)
-        function_name: $ => seq("$", field("name", alias($.imm_ident, $.identifier))),
+        function_name: $ => seq("$", field("name", $.imm_ident)),
 
         array: $ => seq("[", field("items", repeat($._literal)), "]"),
         _literal: $ => choice($.number, $.char_literal, $.macro, $.mem, $.data_label, $.function_name),
@@ -78,14 +78,14 @@ module.exports = grammar({
         char: $ => /[^\\'\r\n]/,
         char_escape: $ => /\\['\\nrt0]/,
 
-        macro: $ => seq("@", field("name", alias($.imm_ident, $.identifier))),
+        macro: $ => seq("@", field("name", $.imm_ident)),
         mem: $ => seq("#", field("addr", $.index)),
-        port: $ => seq("%", field("name", alias($.imm_ident, $.identifier))),
+        port: $ => seq("%", field("name", $.imm_ident)),
 
-        inst_label: $ => seq(":", field("name", alias($.imm_ident, $.identifier))),
+        inst_label: $ => seq(":", field("name", $.imm_ident)),
         end_label: $ => ":$",
         _any_inst_label: $ => choice($.inst_label, $.end_label),
-        data_label: $ => seq(".", field("name", alias($.imm_ident, $.identifier))),
+        data_label: $ => seq(".", field("name", $.imm_ident)),
         definition: $ => seq(
             field("label", $.data_label),
             field("value", choice($._literal, $.array)),
@@ -170,8 +170,8 @@ module.exports = grammar({
         ),
 
         index_register: $ => seq("$", field("index", $.index)),
-        named_register: $ => seq("&", field("name", alias($.imm_ident, $.identifier))),
-        input_register: $ => seq("<", field("name", alias($.imm_ident, $.identifier), token.immediate(">"))),
+        named_register: $ => seq("&", field("name", $.imm_ident)),
+        input_register: $ => seq("<", field("name", $.imm_ident), ">"),
         _reg: $ => choice($.index_register, $.named_register, $.input_register),
 
         _urcl_value: $ => choice($._reg, $._literal),
