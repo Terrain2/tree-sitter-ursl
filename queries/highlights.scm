@@ -6,14 +6,14 @@
 (function_name) @function
 (macro) @macro
 (mem) @address
-(register) @register
+(index_register) @register
+(named_register) @register
 (input_register) @register.special
 
 "'" @string
 (char) @string
 (char_escape) @string.special
 
-(branch opcode: (identifier) @instruction)
 (custom_instruction opcode: (identifier) @instruction)
 (urcl_generic op: (identifier) @instruction)
 
@@ -43,7 +43,7 @@
     "height"
     "const"
     "perm"
-    "halt"
+    (halt)
 
     "in"
     "out"
@@ -52,7 +52,7 @@
     "jump"
     "branch"
 
-    "ret"
+    (ret)
     "call"
     "icall"
 
