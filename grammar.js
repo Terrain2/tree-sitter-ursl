@@ -36,7 +36,7 @@ module.exports = grammar({
         source_file: $ => seq(
             field("headers", repeat($._header)),
             field("data", repeat($.definition)),
-            field("code", repeat(choice($.func, $.inst, $.inst_permutation))),
+            field("code", repeat(choice($.func, $.inst, $.inst_branch, $.inst_permutation))),
         ),
         _header: $ => choice(
             ...Object.keys(headers).map(key => $[key]),
@@ -47,7 +47,7 @@ module.exports = grammar({
         // \d shouldn't be allowed as the first char to disambiguate .0 from labels and fixed/floating point in the future (if that is ever added to URCL, URSL will have equivalents)
         identifier: $ => /([A-Za-z_][\d\.]*)+/,
         imm_ident: $ => token.immediate(/([A-Za-z_][\d\.]*)+/),
-        index: $ => token.immediate(/[1-9]0*/),
+        index: $ => token.immediate(/[1-9]0*|0/),
 
         comment: $ => choice(
             // these weren't working properly, so i copied the ones from C# grammar.1
@@ -117,7 +117,14 @@ module.exports = grammar({
                 repeat(field("output", $._reg)),
             )),
             field("instructions", $.urcl_instructions),
-            optional(field("branch", $.branch_block))
+        ),
+        inst_branch: $ => seq(
+            "branch",
+            field("name", $.identifier),
+            repeat(field("input", $._reg)),
+            "->",
+            field("label", $.inst_label),
+            field("instructions", $.urcl_instructions),
         ),
         inst_permutation: $ => seq(
             "inst",
@@ -133,13 +140,6 @@ module.exports = grammar({
             "[",
             field("items", repeat($.identifier)),
             "]",
-        ),
-        branch_block: $ => seq(
-            "branch",
-            repeat(field("input", $._reg)),
-            "->",
-            field("label", $.inst_label),
-            field("instructions", $.urcl_instructions),
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),

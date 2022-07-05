@@ -44,6 +44,10 @@
                 },
                 {
                   "type": "SYMBOL",
+                  "name": "inst_branch"
+                },
+                {
+                  "type": "SYMBOL",
                   "name": "inst_permutation"
                 }
               ]
@@ -135,7 +139,7 @@
       "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[1-9]0*"
+        "value": "[1-9]0*|0"
       }
     },
     "comment": {
@@ -597,22 +601,54 @@
             "type": "SYMBOL",
             "name": "urcl_instructions"
           }
+        }
+      ]
+    },
+    "inst_branch": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "branch"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "branch",
-              "content": {
-                "type": "SYMBOL",
-                "name": "branch_block"
-              }
-            },
-            {
-              "type": "BLANK"
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "input",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_reg"
             }
-          ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "FIELD",
+          "name": "label",
+          "content": {
+            "type": "SYMBOL",
+            "name": "inst_label"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "instructions",
+          "content": {
+            "type": "SYMBOL",
+            "name": "urcl_instructions"
+          }
         }
       ]
     },
@@ -687,46 +723,6 @@
         {
           "type": "STRING",
           "value": "]"
-        }
-      ]
-    },
-    "branch_block": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "branch"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "FIELD",
-            "name": "input",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_reg"
-            }
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "->"
-        },
-        {
-          "type": "FIELD",
-          "name": "label",
-          "content": {
-            "type": "SYMBOL",
-            "name": "inst_label"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "instructions",
-          "content": {
-            "type": "SYMBOL",
-            "name": "urcl_instructions"
-          }
         }
       ]
     },
