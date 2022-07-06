@@ -49,6 +49,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "inst_permutation"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_internal"
                 }
               ]
             }
@@ -674,6 +678,19 @@
             "type": "SYMBOL",
             "name": "permutation"
           }
+        }
+      ]
+    },
+    "_internal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "dunder_binary"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "dunder_branching"
         }
       ]
     },

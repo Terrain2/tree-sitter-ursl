@@ -36,7 +36,7 @@ module.exports = grammar({
         source_file: $ => seq(
             field("headers", repeat($._header)),
             field("data", repeat($.definition)),
-            field("code", repeat(choice($.func, $.inst, $.inst_branch, $.inst_permutation))),
+            field("code", repeat(choice($.func, $.inst, $.inst_branch, $.inst_permutation, $._internal))),
         ),
         _header: $ => choice(
             ...Object.keys(headers).map(key => $[key]),
@@ -131,6 +131,7 @@ module.exports = grammar({
             field("name", $.identifier),
             field("permutation", $.permutation),
         ),
+        _internal: $ => choice($.dunder_binary, $.dunder_branching),
         dunder_binary: $ => seq(
             "__binary__",
             field("name", $.identifier),

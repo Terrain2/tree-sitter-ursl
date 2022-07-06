@@ -227,6 +227,68 @@
     }
   },
   {
+    "type": "dunder_binary",
+    "named": true,
+    "fields": {
+      "instruction": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "dunder_branching",
+    "named": true,
+    "fields": {
+      "branch": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "instruction": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "func",
     "named": true,
     "fields": {
@@ -833,6 +895,14 @@
         "multiple": true,
         "required": false,
         "types": [
+          {
+            "type": "dunder_binary",
+            "named": true
+          },
+          {
+            "type": "dunder_branching",
+            "named": true
+          },
           {
             "type": "func",
             "named": true
