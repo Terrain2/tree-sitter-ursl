@@ -131,6 +131,20 @@ module.exports = grammar({
             field("name", $.identifier),
             field("permutation", $.permutation),
         ),
+        dunder_binary: $ => seq(
+            "__binary__",
+            field("name", $.identifier),
+            field("instruction", $.identifier),
+            ";",
+        ),
+        dunder_branching: $ => seq(
+            "__branching__",
+            field("name", $.identifier),
+            field("instruction", $.identifier),
+            "+",
+            field("branch", $.identifier),
+            ";",
+        ),
         permutation: $ => seq(
             field("input", $.stack_frame),
             "->",

@@ -1222,6 +1222,10 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
@@ -1251,6 +1255,14 @@
   },
   {
     "type": "]",
+    "named": false
+  },
+  {
+    "type": "__binary__",
+    "named": false
+  },
+  {
+    "type": "__branching__",
     "named": false
   },
   {
