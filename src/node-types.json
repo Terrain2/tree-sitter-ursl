@@ -404,6 +404,16 @@
           }
         ]
       },
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "data_label",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,

@@ -135,7 +135,7 @@ module.exports = grammar({
             optional(field("stack", $.stack_behaviour)),
             optional(seq(
                 "=",
-                field("label", /\.\w+/),
+                field("label", $.data_label),
             )),
             ";",
         ),

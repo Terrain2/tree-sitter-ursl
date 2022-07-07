@@ -800,8 +800,8 @@
                   "type": "FIELD",
                   "name": "label",
                   "content": {
-                    "type": "PATTERN",
-                    "value": "\\.\\w+"
+                    "type": "SYMBOL",
+                    "name": "data_label"
                   }
                 }
               ]
