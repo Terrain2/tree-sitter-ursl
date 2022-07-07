@@ -12,7 +12,8 @@
 
 "'" @string
 (char) @string
-(char_escape) @string.special
+(string) @string
+(escape_sequence) @string.special
 
 (custom_instruction opcode: (identifier) @instruction)
 (urcl_generic op: (identifier) @instruction)
