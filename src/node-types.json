@@ -367,6 +367,32 @@
     }
   },
   {
+    "type": "dunder_unary",
+    "named": true,
+    "fields": {
+      "instruction": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "escape_sequence",
     "named": true,
     "fields": {
@@ -437,6 +463,32 @@
     }
   },
   {
+    "type": "extern_icall",
+    "named": true,
+    "fields": {
+      "call_convention": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "stack_behaviour",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "func",
     "named": true,
     "fields": {
@@ -468,6 +520,10 @@
           },
           {
             "type": "custom_instruction",
+            "named": true
+          },
+          {
+            "type": "extern_icall",
             "named": true
           },
           {
@@ -1060,6 +1116,10 @@
             "named": true
           },
           {
+            "type": "dunder_unary",
+            "named": true
+          },
+          {
             "type": "extern_func",
             "named": true
           },
@@ -1513,6 +1573,10 @@
   },
   {
     "type": "__branching__",
+    "named": false
+  },
+  {
+    "type": "__unary__",
     "named": false
   },
   {

@@ -1097,11 +1097,48 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "dunder_unary"
+        },
+        {
+          "type": "SYMBOL",
           "name": "dunder_binary"
         },
         {
           "type": "SYMBOL",
           "name": "dunder_branching"
+        }
+      ]
+    },
+    "dunder_unary": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "__unary__"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "FIELD",
+          "name": "instruction",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -1297,7 +1334,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "branch"
+          "name": "extern_icall"
         },
         {
           "type": "SYMBOL",
@@ -1530,6 +1567,35 @@
           "content": {
             "type": "SYMBOL",
             "name": "number"
+          }
+        }
+      ]
+    },
+    "extern_icall": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "extern"
+        },
+        {
+          "type": "FIELD",
+          "name": "call_convention",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "icall"
+        },
+        {
+          "type": "FIELD",
+          "name": "operand",
+          "content": {
+            "type": "SYMBOL",
+            "name": "stack_behaviour"
           }
         }
       ]

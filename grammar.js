@@ -191,7 +191,14 @@ module.exports = grammar({
             field("name", $.identifier),
             field("permutation", $.permutation),
         ),
-        _internal: $ => choice($.dunder_binary, $.dunder_branching),
+        _internal: $ => choice($.dunder_unary, $.dunder_binary, $.dunder_branching),
+        dunder_unary: $ => seq(
+            "__unary__",
+            field("name", $.identifier),
+            "->",
+            field("instruction", $.identifier),
+            ";",
+        ),
         dunder_binary: $ => seq(
             "__binary__",
             field("name", $.identifier),
@@ -220,11 +227,13 @@ module.exports = grammar({
         ),
         _instruction: $ => choice(
             ...Object.keys(instructions).map(op => $[op]),
-            $.branch,
+            $.extern_icall,
             $.custom_instruction
         ),
 
         ...instructions,
+
+        extern_icall: $ => seq("extern", field("call_convention", $.string), "icall", field("operand", $.stack_behaviour)),
 
         custom_instruction: $ => seq(field("opcode", $.identifier)),
 
