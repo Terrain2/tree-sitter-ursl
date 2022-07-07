@@ -111,7 +111,7 @@ module.exports = grammar({
         inst: $ => seq(
             "inst",
             field("name", $.identifier),
-            repeat(field("input", $._reg)),
+            repeat(field("input", $._input_reg)),
             optional(seq(
                 "->",
                 repeat(field("output", $._reg)),
@@ -188,8 +188,10 @@ module.exports = grammar({
 
         index_register: $ => seq("$", field("index", $.index)),
         named_register: $ => seq("&", field("name", $.imm_ident)),
-        input_register: $ => seq("<", field("name", $.imm_ident), ">"),
-        _reg: $ => choice($.index_register, $.named_register, $.input_register),
+        _reg: $ => choice($.index_register, $.named_register),
+
+        input_register: $ => seq("<", field("reg", $._reg), ">"),
+        _input_reg: $ => choice($._reg, $.input_register),
 
         _urcl_value: $ => choice($._reg, $._literal),
 
