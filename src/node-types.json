@@ -494,12 +494,16 @@
     "type": "input_register",
     "named": true,
     "fields": {
-      "name": {
+      "reg": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "imm_ident",
+            "type": "index_register",
+            "named": true
+          },
+          {
+            "type": "named_register",
             "named": true
           }
         ]
@@ -557,10 +561,6 @@
             "named": true
           },
           {
-            "type": "input_register",
-            "named": true
-          },
-          {
             "type": "named_register",
             "named": true
           }
@@ -578,10 +578,6 @@
         "types": [
           {
             "type": "index_register",
-            "named": true
-          },
-          {
-            "type": "input_register",
             "named": true
           },
           {
@@ -1010,10 +1006,6 @@
             "named": true
           },
           {
-            "type": "input_register",
-            "named": true
-          },
-          {
             "type": "inst_label",
             "named": true
           },
@@ -1054,10 +1046,6 @@
             "named": true
           },
           {
-            "type": "input_register",
-            "named": true
-          },
-          {
             "type": "macro",
             "named": true
           },
@@ -1087,10 +1075,6 @@
         "types": [
           {
             "type": "index_register",
-            "named": true
-          },
-          {
-            "type": "input_register",
             "named": true
           },
           {
@@ -1217,10 +1201,6 @@
           },
           {
             "type": "index_register",
-            "named": true
-          },
-          {
-            "type": "input_register",
             "named": true
           },
           {

@@ -566,7 +566,7 @@
             "name": "input",
             "content": {
               "type": "SYMBOL",
-              "name": "_reg"
+              "name": "_input_reg"
             }
           }
         },
@@ -1235,27 +1235,6 @@
         }
       ]
     },
-    "input_register": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "<"
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "imm_ident"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": ">"
-        }
-      ]
-    },
     "_reg": {
       "type": "CHOICE",
       "members": [
@@ -1266,6 +1245,36 @@
         {
           "type": "SYMBOL",
           "name": "named_register"
+        }
+      ]
+    },
+    "input_register": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "FIELD",
+          "name": "reg",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_reg"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "_input_reg": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_reg"
         },
         {
           "type": "SYMBOL",
