@@ -68,6 +68,46 @@
     }
   },
   {
+    "type": "branch_head",
+    "named": true,
+    "fields": {
+      "input": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "index_register",
+            "named": true
+          },
+          {
+            "type": "named_register",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "inst_label",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "call",
     "named": true,
     "fields": {
@@ -292,6 +332,16 @@
     "type": "func",
     "named": true,
     "fields": {
+      "head": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "func_head",
+            "named": true
+          }
+        ]
+      },
       "instructions": {
         "multiple": true,
         "required": false,
@@ -361,7 +411,13 @@
             "named": true
           }
         ]
-      },
+      }
+    }
+  },
+  {
+    "type": "func_head",
+    "named": true,
+    "fields": {
       "locals": {
         "multiple": false,
         "required": false,
@@ -514,6 +570,58 @@
     "type": "inst",
     "named": true,
     "fields": {
+      "head": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "inst_head",
+            "named": true
+          }
+        ]
+      },
+      "instruction": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "urcl_instruction",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "inst_branch",
+    "named": true,
+    "fields": {
+      "head": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "branch_head",
+            "named": true
+          }
+        ]
+      },
+      "instruction": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "urcl_instruction",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "inst_head",
+    "named": true,
+    "fields": {
       "input": {
         "multiple": true,
         "required": false,
@@ -528,16 +636,6 @@
           },
           {
             "type": "named_register",
-            "named": true
-          }
-        ]
-      },
-      "instructions": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "urcl_instructions",
             "named": true
           }
         ]
@@ -562,56 +660,6 @@
           },
           {
             "type": "named_register",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "inst_branch",
-    "named": true,
-    "fields": {
-      "input": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "index_register",
-            "named": true
-          },
-          {
-            "type": "named_register",
-            "named": true
-          }
-        ]
-      },
-      "instructions": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "urcl_instructions",
-            "named": true
-          }
-        ]
-      },
-      "label": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "inst_label",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
             "named": true
           }
         ]
@@ -1127,22 +1175,6 @@
         "types": [
           {
             "type": "inst_label",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "urcl_instructions",
-    "named": true,
-    "fields": {
-      "instruction": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "urcl_instruction",
             "named": true
           }
         ]

@@ -96,7 +96,8 @@ module.exports = grammar({
             "->",
             field("returns", $.number),
         ),
-        func: $ => seq(
+
+        func_head: $ => seq(
             "func",
             field("name", $.function_name),
             optional(field("stack", $.stack_behaviour)),
@@ -104,11 +105,15 @@ module.exports = grammar({
                 "+",
                 field("locals", $.number)
             )),
+        ),
+        func: $ => seq(
+            field("head", $.func_head),
             "{",
             field("instructions", repeat($._instruction)),
             "}",
         ),
-        inst: $ => seq(
+
+        inst_head: $ => seq(
             "inst",
             field("name", $.identifier),
             repeat(field("input", $._input_reg)),
@@ -116,16 +121,28 @@ module.exports = grammar({
                 "->",
                 repeat(field("output", $._reg)),
             )),
-            field("instructions", $.urcl_instructions),
         ),
-        inst_branch: $ => seq(
+        inst: $ => seq(
+            field("head", $.inst_head),
+            "{",
+            repeat(field("instruction", $.urcl_instruction)),
+            "}"
+        ),
+        
+        branch_head: $ => seq(
             "branch",
             field("name", $.identifier),
             repeat(field("input", $._reg)),
             "->",
             field("label", $.inst_label),
-            field("instructions", $.urcl_instructions),
         ),
+        inst_branch: $ => seq(
+            field("head", $.branch_head),
+            "{",
+            repeat(field("instruction", $.urcl_instruction)),
+            "}"
+        ),
+
         inst_permutation: $ => seq(
             "inst",
             field("name", $.identifier),
@@ -162,14 +179,6 @@ module.exports = grammar({
             ...Object.keys(instructions).map(op => $[op]),
             $.branch,
             $.custom_instruction
-        ),
-
-        urcl_instructions: $ => seq(
-            "{",
-            repeat(field("instruction", $.urcl_instruction)),
-            // the optional() is required here, because no backtracking, so the \n will consume newline and cause error otherwise
-            // repeat(seq("\n", optional(field("instruction", $.urcl_instruction)))),
-            "}"
         ),
 
         ...instructions,

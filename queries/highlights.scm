@@ -17,8 +17,8 @@
 (custom_instruction opcode: (identifier) @instruction)
 (urcl_generic op: (identifier) @instruction)
 
-(inst name: (identifier) @instruction)
-(inst_branch name: (identifier) @instruction)
+(inst_head name: (identifier) @instruction)
+(branch_head name: (identifier) @instruction)
 (inst_permutation name: (identifier) @instruction)
 (stack_frame (identifier) @property)
 
