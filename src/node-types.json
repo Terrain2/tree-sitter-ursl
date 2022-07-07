@@ -3,12 +3,16 @@
     "type": "array",
     "named": true,
     "fields": {
-      "items": {
+      "item": {
         "multiple": true,
         "required": false,
         "types": [
           {
-            "type": "char_literal",
+            "type": "array",
+            "named": true
+          },
+          {
+            "type": "char",
             "named": true
           },
           {
@@ -29,6 +33,10 @@
           },
           {
             "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -124,19 +132,19 @@
     }
   },
   {
-    "type": "char_literal",
+    "type": "char",
     "named": true,
     "fields": {
-      "value": {
+      "content": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "char",
+            "type": "char_value",
             "named": true
           },
           {
-            "type": "char_escape",
+            "type": "escape_sequence",
             "named": true
           }
         ]
@@ -157,7 +165,7 @@
         "required": true,
         "types": [
           {
-            "type": "char_literal",
+            "type": "char",
             "named": true
           },
           {
@@ -217,6 +225,32 @@
     }
   },
   {
+    "type": "deferred_func",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "function_name",
+            "named": true
+          }
+        ]
+      },
+      "stack": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "stack_behaviour",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "definition",
     "named": true,
     "fields": {
@@ -239,7 +273,7 @@
             "named": true
           },
           {
-            "type": "char_literal",
+            "type": "char",
             "named": true
           },
           {
@@ -260,6 +294,10 @@
           },
           {
             "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -322,6 +360,66 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "escape_sequence",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "char_escape",
+            "named": true
+          },
+          {
+            "type": "hex_escape",
+            "named": true
+          },
+          {
+            "type": "unicode_escape",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "extern_func",
+    "named": true,
+    "fields": {
+      "call_convention": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "function_name",
+            "named": true
+          }
+        ]
+      },
+      "stack": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "stack_behaviour",
             "named": true
           }
         ]
@@ -940,11 +1038,19 @@
         "required": false,
         "types": [
           {
+            "type": "deferred_func",
+            "named": true
+          },
+          {
             "type": "dunder_binary",
             "named": true
           },
           {
             "type": "dunder_branching",
+            "named": true
+          },
+          {
+            "type": "extern_func",
             "named": true
           },
           {
@@ -1038,6 +1144,26 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "escape_sequence",
+            "named": true
+          },
+          {
+            "type": "string_segment",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "urcl_generic",
     "named": true,
     "fields": {
@@ -1078,7 +1204,7 @@
         "required": true,
         "types": [
           {
-            "type": "char_literal",
+            "type": "char",
             "named": true
           },
           {
@@ -1220,7 +1346,7 @@
         "required": true,
         "types": [
           {
-            "type": "char_literal",
+            "type": "char",
             "named": true
           },
           {
@@ -1254,6 +1380,10 @@
         ]
       }
     }
+  },
+  {
+    "type": "\"",
+    "named": false
   },
   {
     "type": "#",
@@ -1312,6 +1442,10 @@
     "named": false
   },
   {
+    "type": "=",
+    "named": false
+  },
+  {
     "type": ">",
     "named": false
   },
@@ -1333,6 +1467,30 @@
   },
   {
     "type": "[",
+    "named": false
+  },
+  {
+    "type": "\\",
+    "named": false
+  },
+  {
+    "type": "\\U",
+    "named": false
+  },
+  {
+    "type": "\\U{",
+    "named": false
+  },
+  {
+    "type": "\\u",
+    "named": false
+  },
+  {
+    "type": "\\u{",
+    "named": false
+  },
+  {
+    "type": "\\x",
     "named": false
   },
   {
@@ -1360,11 +1518,11 @@
     "named": false
   },
   {
-    "type": "char",
+    "type": "char_escape",
     "named": true
   },
   {
-    "type": "char_escape",
+    "type": "char_value",
     "named": true
   },
   {
@@ -1374,6 +1532,10 @@
   {
     "type": "end_label",
     "named": true
+  },
+  {
+    "type": "extern",
+    "named": false
   },
   {
     "type": "func",
@@ -1390,6 +1552,10 @@
   {
     "type": "height",
     "named": false
+  },
+  {
+    "type": "hex_escape",
+    "named": true
   },
   {
     "type": "icall",
@@ -1450,6 +1616,14 @@
   {
     "type": "set",
     "named": false
+  },
+  {
+    "type": "string_segment",
+    "named": true
+  },
+  {
+    "type": "unicode_escape",
+    "named": true
   },
   {
     "type": "{",

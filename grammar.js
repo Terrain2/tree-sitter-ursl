@@ -36,7 +36,7 @@ module.exports = grammar({
         source_file: $ => seq(
             field("headers", repeat($._header)),
             field("data", repeat($.definition)),
-            field("code", repeat(choice($.func, $.inst, $.inst_branch, $.inst_permutation, $._internal))),
+            field("code", repeat(choice($.func, $.deferred_func, $.extern_func, $.inst, $.inst_branch, $.inst_permutation, $._internal))),
         ),
         _header: $ => choice(
             ...Object.keys(headers).map(key => $[key]),
@@ -60,8 +60,9 @@ module.exports = grammar({
         // Cannot start with a digit like if it had \w+, because it would be ambiguous with regs for URCL blocks (how did tree-sitter not catch that?)
         function_name: $ => seq("$", field("name", $.imm_ident)),
 
-        array: $ => seq("[", field("items", repeat($._literal)), "]"),
-        _literal: $ => choice($.number, $.char_literal, $.macro, $.mem, $.data_label, $.function_name),
+        _data_literal: $ => choice($.string, $.array, $._literal),
+        array: $ => seq("[", field("item", repeat($._data_literal)), "]"),
+        _literal: $ => choice($.number, $.char, $.macro, $.mem, $.data_label, $.function_name),
 
         number: $ => choice(
             /0b[0-1]+/,
@@ -70,13 +71,35 @@ module.exports = grammar({
             /0x[A-Fa-f\d]+/,
         ),
 
-        char_literal: $ => seq(
-            "'",
-            field("value", choice($.char, $.char_escape)),
-            "'",
+        // string from C# grammar, allow its escape sequences because why not
+        string: $ => seq(
+            '"',
+            repeat(field("content", choice(
+                $.string_segment,
+                $.escape_sequence,
+            ))),
+            '"'
         ),
-        char: $ => /[^\\'\r\n]/,
-        char_escape: $ => /\\['\\nrt0]/,
+        char: $ => seq(
+            "'",
+            field("content", choice($.char_value, $.escape_sequence)),
+            "'"
+        ),
+        string_segment: $ => token.immediate(/[^\\"]+/),
+        char_value: $ => token.immediate(/[^\\']/),
+        escape_sequence: $ => choice(
+            seq(token.immediate("\\x"), field("value", $.hex_escape)),
+            seq(token.immediate("\\u"), field("value", alias($.unicode_escape_short, $.unicode_escape))),
+            seq(token.immediate("\\u{"), field("value", $.unicode_escape), token.immediate("}")),
+            seq(token.immediate("\\U"), field("value", alias($.unicode_escape_long, $.unicode_escape))),
+            seq(token.immediate("\\U{"), field("value", $.unicode_escape), token.immediate("}")),
+            seq(token.immediate("\\"), field("value", $.char_escape)),
+        ),
+        hex_escape: $ => token.immediate(/[0-9a-fA-F]{2}/),
+        unicode_escape: $ => token.immediate(/[0-9a-fA-F]+/),
+        unicode_escape_short: $ => token.immediate(/[0-9a-fA-F]{4}/),
+        unicode_escape_long: $ => token.immediate(/[0-9a-fA-F]{8}/),
+        char_escape: $ => token.immediate(/[^xuU]/),
 
         macro: $ => seq("@", field("name", $.imm_ident)),
         mem: $ => seq("#", field("addr", $.index)),
@@ -88,13 +111,33 @@ module.exports = grammar({
         data_label: $ => seq(".", field("name", $.imm_ident)),
         definition: $ => seq(
             field("label", $.data_label),
-            field("value", choice($._literal, $.array)),
+            field("value", $._data_literal, $.array),
         ),
 
         stack_behaviour: $ => seq(
             field("params", $.number),
             "->",
             field("returns", $.number),
+        ),
+
+        deferred_func: $ => seq(
+            "func",
+            field("name", $.function_name),
+            optional(field("stack", $.stack_behaviour)),
+            ";",
+        ),
+
+        extern_func: $ => seq(
+            "extern",
+            field("call_convention", $.string),
+            "func",
+            field("name", $.function_name),
+            optional(field("stack", $.stack_behaviour)),
+            optional(seq(
+                "=",
+                field("label", /\.\w+/),
+            )),
+            ";",
         ),
 
         func_head: $ => seq(
@@ -128,7 +171,7 @@ module.exports = grammar({
             repeat(field("instruction", $.urcl_instruction)),
             "}"
         ),
-        
+
         branch_head: $ => seq(
             "branch",
             field("name", $.identifier),
