@@ -152,7 +152,7 @@ module.exports = grammar({
         func: $ => seq(
             field("head", $.func_head),
             "{",
-            field("instructions", repeat($._instruction)),
+            field("instruction", repeat($._instruction)),
             "}",
         ),
 
