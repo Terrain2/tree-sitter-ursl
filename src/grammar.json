@@ -892,7 +892,7 @@
         },
         {
           "type": "FIELD",
-          "name": "instructions",
+          "name": "instruction",
           "content": {
             "type": "REPEAT",
             "content": {
