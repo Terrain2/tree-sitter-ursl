@@ -6,6 +6,7 @@ minheap 0
 
 .chars [ 'H' 'e' 'l' 'l' 'o' ',' 0x20 'W' 'o' 'r' 'l' 'd' ]
 .str "Hello, World\n"
+.sorry_unicode_ive_been_a_bad_boy_uwu "This is illegal on so many levels lmao: \u{D800}"
 .escape '\n'
 .num 0x20
 .nums [ 1 2 3 4 /* ... */ @MAX ]

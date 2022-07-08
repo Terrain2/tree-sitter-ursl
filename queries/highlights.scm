@@ -23,14 +23,15 @@
 (inst_permutation name: (identifier) @instruction)
 (stack_frame (identifier) @property)
 
+(func "{" @punctuation.bracket "}" @punctuation.bracket)
+(inst "{" @punctuation.bracket "}" @punctuation.bracket)
+(inst_branch "{" @punctuation.bracket "}" @punctuation.bracket)
+
 [
     "->"
     "+"
 ] @punctuation.delimiter
-[
-    "[" "]" ; data arrays, permutations
-    "{" "}" ; instruction lists
-] @punctuation.bracket
+["[" "]"] @punctuation.bracket
 
 [ ; actual keywords
     "bits"
