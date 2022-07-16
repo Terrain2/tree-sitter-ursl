@@ -40,6 +40,7 @@
     
     "inst"
     "func"
+    "extern"
 ] @keyword
 
 [ ; intrinsics

@@ -22,7 +22,7 @@ func $main {
     const 0
     const $fib
     perm [a b] -> [b a]
-    icall 1 -> 1
+    extern "URSL" icall 1 -> 1
     out %NUMB
 }
 
